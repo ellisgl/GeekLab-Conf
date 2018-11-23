@@ -10,23 +10,23 @@ abstract class ConfigurationAbstract implements ConfigurationInterface
     protected $mainFile;
 
     /**
-     * @var string $configurationLocation Path of the extra configuration files.
+     * @var string $confLocation Path of the extra configuration files.
      */
-    protected $configurationLocation;
+    protected $confLocation;
 
     /**
-     * @var array $configuration The generated configuration.
+     * @var array $conf The generated configuration.
      */
-    protected $configuration = array();
+    protected $conf = array();
 
     /**
-     * @param string $mainFile              Path/filename of the main configuration file.
-     * @param string $configurationLocation Path of the extra configuration files.
+     * @param string $mainFile     Path/filename of the main configuration file.
+     * @param string $confLocation Path of the extra configuration files.
      */
-    public function __construct(string $mainFile, string $configurationLocation)
+    public function __construct(string $mainFile, string $confLocation)
     {
-        $this->mainFile              = $mainFile;
-        $this->configurationLocation = $configurationLocation;
+        $this->mainFile     = $mainFile;
+        $this->confLocation = $confLocation;
     }
 
     /**
@@ -36,11 +36,11 @@ abstract class ConfigurationAbstract implements ConfigurationInterface
      */
     public function getAll(): array
     {
-        return $this->configuration;
+        return $this->conf;
     }
 
     /**
-     * Get data with dot notation.
+     * Get data by dot notation.
      * Stolen from: https://stackoverflow.com/a/14706302/344028
      *
      * @param string $key dot notated array key accessor.
@@ -54,24 +54,25 @@ abstract class ConfigurationAbstract implements ConfigurationInterface
         $key = strtoupper($key);
 
         /**
-         * @var mixed $configuration Save configuration to local scope.
+         * @var mixed $conf Save conf to local scope.
          */
-        $configuration = $this->configuration;
+        $conf = $this->conf;
 
         /**
-         * @var bool|array $position Tokenize the key to do iterations over the configuration with.
+         * @var bool|array $pos Tokenize the key to do iterations over the conf with.
          */
-        $position = strtok($key, '.');
-        while ($position !== false) {
-            if (!isset($configuration[$position])) {
+        $pos = strtok($key, '.');
+
+        while ($pos !== false) {
+            if (!isset($conf[$pos])) {
                 return false;
             }
 
-            $configuration = $configuration[$position];
-            $position      = strtok('.');
+            $conf = $conf[$pos];
+            $pos  = strtok('.');
         }
 
-        return $configuration;
+        return $conf;
     }
 
     /**
@@ -79,18 +80,18 @@ abstract class ConfigurationAbstract implements ConfigurationInterface
      *   Convert key names to uppercase.
      *   Convert spaces and periods to underscores.
      *
-     * @param array $array
+     * @param array $arr
      * @return array
      */
-    protected function conformArray(array $array): array
+    protected function conformArray(array $arr): array
     {
         // Store our conformed array for returning.
         $fixed = array();
 
         // Convert keys to uppercase
-        $array = array_change_key_case($array, CASE_UPPER);
+        $arr = array_change_key_case($arr, CASE_UPPER);
 
-        foreach ($array as $k => $v) {
+        foreach ($arr as $k => $v) {
             // Recursively conform inner arrays.
             if (is_array($v)) {
                 $v = $this->conformArray($v);
@@ -114,22 +115,23 @@ abstract class ConfigurationAbstract implements ConfigurationInterface
     {
         if (is_array($data)) {
             // It's an array, so let's loop through it.
-            foreach ($data as $key => $value) {
-                if (!is_array($value)) {
+            foreach ($data as $k => $val) {
+                if (!is_array($val)) {
                     // Find the self referenced placeholders and fill them.
-                    $data[$key] = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
-                        //var_dump($matches);
+                    $data[$k] = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
+                        // Does this key exist, is so fill this match, if not, just return the match intact.
                         $ret = ($this->get($matches[1])) ? $this->get($matches[1]) : $matches[0];
+
                         return $ret;
-                    }, $value);
+                    }, $val);
 
                     // Find the recursive self referenced placeholders and fill them.
-                    if ($data[$key] !== $value && preg_match('/\@\[([a-zA-Z0-9_.-]*?)\]/', $data[$key])) {
-                        $data[$key] = $this->replacePlaceholders($data[$key]);
+                    if ($data[$k] !== $val && preg_match('/\@\[([a-zA-Z0-9_.-]*?)\]/', $data[$k])) {
+                        $data[$k] = $this->replacePlaceholders($data[$k]);
                     }
 
                     // Find the environment variable placeholders and fill them.
-                    $data[$key] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
+                    $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
                         if (!empty(getenv($matches[1], true))) {
                             $ret = getenv($matches[1], true);
                         } elseif (!empty(getenv($matches[1]))) {
@@ -139,17 +141,18 @@ abstract class ConfigurationAbstract implements ConfigurationInterface
                         }
 
                         return $ret;
-                    }, $data[$key]);
+                    }, $data[$k]);
                 } else {
                     // Go into the array.
-                    $data[$key] = $this->replacePlaceholders($value);
+                    $data[$k] = $this->replacePlaceholders($val);
                 }
             }
         } elseif (is_string($data)) {
-            // It's a string, which means that it will get hit on certain recursive stuff, like @[selfreferencedplaceholder.@[somestuff.a]].
+            // It's a string!
+            // Certain recursive stuff, like @[selfreferencedplaceholder.@[somestuff.a]] is what triggers this part.
             // Find the self referenced placeholders and fill them.
-
             $data = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
+                // Does this key exist, is so fill this match, if not, just return the match intact.
                 $ret = ($this->get($matches[1])) ? $this->get($matches[1]) : $matches[0];
 
                 // Looks like we have a recursive self referenced placeholder.

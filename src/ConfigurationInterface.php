@@ -6,9 +6,9 @@ interface ConfigurationInterface
 {
     /**
      * @param string $mainFile
-     * @param string $configurationLocation
+     * @param string $confLocation
      */
-    public function __construct(string $mainFile, string $configurationLocation);
+    public function __construct(string $mainFile, string $confLocation);
 
     /**
      * Return the compiled array.
