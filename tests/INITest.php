@@ -21,7 +21,7 @@ class ConfINI extends TestCase
         $systemFile = __DIR__ . DS . 'data' . DS . 'ini' . DS . 'system.ini';
 
         // Where configuration INIs are.
-        $configurationDirectory = __DIR__ . DS . 'data' . DS . 'ini' . DS . 'configurations' . DS;
+        $configurationDirectory = __DIR__ . DS . 'data' . DS . 'ini' . DS;
 
         // Let's get loaded.
         self::$configuration = new Conf\INI($systemFile, $configurationDirectory);
