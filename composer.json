@@ -1,5 +1,5 @@
 {
-    "name": "geeklab/configuration",
+    "name": "geeklab/conf",
     "description": "Configuration Library.",
     "type": "library",
     "license": "GPL-3.0-or-later",
@@ -14,7 +14,7 @@
     },
     "autoload"          : {
         "psr-4" : {
-            "GeekLab\\Configuration\\" : "src"
+            "GeekLab\\Conf\\" : "src"
         }
     },
     "require-dev": {

@@ -1,8 +1,8 @@
 <?php
 
-namespace GeekLab\Configuration;
+namespace GeekLab\Conf;
 
-final class INI extends ConfigurationAbstract
+final class INI extends ConfAbstract
 {
     private function import($iniFile)
     {

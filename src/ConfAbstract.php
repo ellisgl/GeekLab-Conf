@@ -1,8 +1,8 @@
 <?php
 
-namespace GeekLab\Configuration;
+namespace GeekLab\Conf;
 
-abstract class ConfigurationAbstract implements ConfigurationInterface
+abstract class ConfAbstract implements ConfInterface
 {
     /**
      * @var string $mainFile Path/filename of the main configuration file.

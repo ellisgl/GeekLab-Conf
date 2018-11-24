@@ -1,8 +1,8 @@
 <?php
 
-namespace GeekLab\Configuration;
+namespace GeekLab\Conf;
 
-interface ConfigurationInterface
+interface ConfInterface
 {
     /**
      * @param string $mainFile
