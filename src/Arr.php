@@ -2,17 +2,17 @@
 
 namespace GeekLab\Conf;
 
-final class INI extends ConfAbstract
+final class Arr extends ConfAbstract
 {
     /**
      * Import an individual file.
      *
      * @param string $file
      */
-    private function import(string $file): void
+    private function import(string $file)
     {
         // Load and parse the file.
-        $conf = parse_ini_file($file, true);
+        $conf = include($file);
 
         // Uppercase and change spaces and periods to underscores in key names.
         $conf = $this->conformArray($conf);
@@ -35,7 +35,7 @@ final class INI extends ConfAbstract
     public function load(): void
     {
         // Load and parse the main INI file.
-        $this->conf = parse_ini_file($this->mainFile);
+        $this->conf = include($this->mainFile);
 
         // Conform the array: uppercase and changes spaces to underscores in keys.
         $this->conf = $this->conformArray($this->conf);
@@ -43,7 +43,7 @@ final class INI extends ConfAbstract
         // Load in the extra configuration via the CONF property.
         if (isset($this->conf['CONF']) && is_array($this->conf['CONF'])) {
             foreach ($this->conf['CONF'] as $file) {
-                $this->import($this->confLocation . $file . '.ini');
+                $this->import($this->confLocation . $file . '.php');
             }
         }
 
