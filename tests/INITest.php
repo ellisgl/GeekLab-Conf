@@ -116,6 +116,13 @@ class ConfINI extends TestCase
     }
 
     /** @test */
+    public function testThatItDoesntReplaceMissingSelfReferencedPlaceholders()
+    {
+        // Make sure we do not replace things we can't reference.
+        $this->assertEquals('@[doesnotexist]', self::$configuration->get('somestuff.d'), 'Configuration\INI replaced a non existing self reference.');
+    }
+
+    /** @test */
     public function testThatItCanReplaceRecursiveSelfReferencedPlaceholders()
     {
         // Test the recursive self referenced placeholder replacement.
@@ -125,9 +132,32 @@ class ConfINI extends TestCase
     }
 
     /** @test */
+    public function testThatItDoesntReplaceMissingRecursiveSelfReferencedPlaceholders()
+    {
+        // Make sure we do not replace things we can't reference.
+        $this->assertEquals('@[doesnt].@[exist]', self::$configuration->get('somestuff.e'), 'Configuration\INI replaced a non existing recursive self reference.');
+        $this->assertEquals('@[doesnt.@[exist]]', self::$configuration->get('somestuff.f'), 'Configuration\INI replaced a non existing recursive self reference.');
+        $this->assertEquals('@[@[doesnt].exist]', self::$configuration->get('somestuff.g'), 'Configuration\INI replaced a non existing recursive self reference.');
+        $this->assertEquals('@[@[doesnt].@[exist]]', self::$configuration->get('somestuff.h'), 'Configuration\INI replaced a non existing recursive self reference.');
+    }
+
+    /** @test */
     public function testThatItCanReplaceEnvironmentVariablePlaceholders()
     {
         // Test environment variable replacement.
         $this->assertEquals('utf8', self::$configuration->get('database.charset'), 'Configuration\INI did not replace an environment variable placeholder.');
+    }
+
+    /** @test */
+    public function testThatItCanReplaceEnvironmentVariablePlaceholderWithReferencedPlaceholders()
+    {
+        // Check to see if we can replace a environment variable placeholder that uses a self referenced placeholder inside of it.
+        $this->assertEquals('utf8', self::$configuration->get('somestuff.k'), 'Configuration\INI did not replace an environment variable placeholder with a self referenced placeholder inside it.');
+    }
+
+    /** @test */
+    public function testThatItDoesntReplaceMissingEnvironmentVariablePlaceholders()
+    {
+        $this->assertEquals('$[DOESNOTEXIST]', self::$configuration->get('somestuff.i'), 'Configuration\INI replaced a non existing recursive self reference.');
     }
 }
