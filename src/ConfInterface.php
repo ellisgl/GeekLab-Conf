@@ -26,12 +26,8 @@ interface ConfInterface
     public function get(string $key);
 
     /**
-     * Load should do the following:
-     *   Load in main configuration.
-     *   Conform that array.
-     *   Load in the extra files listed in the main configuration file.
-     *   Conform those.
-     *   Replace the placeholders.
+     * Initialize the configuration system.
+     * Use callbacks to load the file and convert to array and
      */
     public function init(): void;
 }
