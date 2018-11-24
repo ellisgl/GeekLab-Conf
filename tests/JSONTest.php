@@ -15,13 +15,13 @@ class ConfJSON extends TestCase
     {
         // Load in a the main INI configuration.
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/data/JSON/';
+        $configurationDirectory = __DIR__ . '/data/json/';
 
         // Main INI file.
         $systemFile = $configurationDirectory . 'system.json';
 
         // Let's get loaded.
-        self::$configuration = new Conf\json($systemFile, $configurationDirectory);
+        self::$configuration = new Conf\JSON($systemFile, $configurationDirectory);
         self::$configuration->init();
 
         // Sometimes you just want to see it.

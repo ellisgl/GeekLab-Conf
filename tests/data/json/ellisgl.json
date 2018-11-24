@@ -33,6 +33,6 @@
     },
     "other.stuff"               : {
         ".i.like.dots.period" : "And that is a fact!",
-        "multiline"           : "This\nis\na\n\nmultiline\nvalue."
+        "multiline"           : "This\nis\na\nmultiline\nvalue."
     }
 }

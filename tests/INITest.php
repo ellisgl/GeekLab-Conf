@@ -15,7 +15,7 @@ class ConfINI extends TestCase
     {
         // Load in a the main INI configuration.
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/data/INI/';
+        $configurationDirectory = __DIR__ . '/data/ini/';
 
         // Main INI file.
         $systemFile = $configurationDirectory . 'system.INI';
