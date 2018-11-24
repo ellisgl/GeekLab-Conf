@@ -1,6 +1,6 @@
 <?php
 
-use GeekLab\Configuration;
+use GeekLab\Conf;
 use PHPUnit\Framework\TestCase;
 
 class ConfINI extends TestCase
@@ -24,7 +24,7 @@ class ConfINI extends TestCase
         $configurationDirectory = __DIR__ . DS . 'data' . DS . 'ini' . DS . 'configurations' . DS;
 
         // Let's get loaded.
-        self::$configuration = new GeekLab\Configuration\INI($systemFile, $configurationDirectory);
+        self::$configuration = new GeekLab\Conf\INI($systemFile, $configurationDirectory);
         self::$configuration->load();
 
         // Sometimes you just want to see it.
