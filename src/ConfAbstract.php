@@ -15,9 +15,9 @@ abstract class ConfAbstract implements ConfInterface
     protected $confLocation;
 
     /**
-     * @var array $conf The generated configuration.
+     * @var array $conf The compiled configuration.
      */
-    protected $conf = array();
+    protected $conf = [];
 
     /**
      * @param string $mainFile     Path/filename of the main configuration file.
