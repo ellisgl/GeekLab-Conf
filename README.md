@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/ellisgl/GeekLab-Conf.svg?branch=master)](https://travis-ci.com/ellisgl/GeekLab-Conf)
 
 # geeklab/conf
-Immutable configuration system loader / parser for PHP >= 7.1 that support multiple file formats and has some "templating" features.
+Immutable configuration system loader & parser for PHP >= 7.1 that support multiple file formats and has some "templating" features.
 
 ## Features:
 * Multi-file configuration loading, no more monolithic configurations!
