@@ -16,8 +16,6 @@ composer require geeklab/conf
 TODO
 
 ## Todo:
-* More tests.
-* More code.
 * More Documentation.
 
 ## Change Log
