@@ -15,7 +15,7 @@ These are self referenced placeholders. When the configuration is being compiled
 
 Also in the `ellisgl.json`, there is a `$[DB_CHARSET]` placeholder which will be replaced by the contents of the environmental variable `DB_CHARSET`.
 
-You can also do a recursive self referenced placeholder replacement. If you look at the `ellisgl.json`, you might notice `a = @[selfreferencedplaceholder.@[somestuff.a]]` which would become `@[selfreferencedplaceholder.x]` and then finally become `We Can Do That!`. 
+You can also do a recursive self referenced placeholder replacement. If you look at the `ellisgl.json`, you might notice `"a":  "@[selfreferencedplaceholder.@[somestuff.a]]"` which would become `@[selfreferencedplaceholder.x]` and then finally become `We Can Do That!`. 
 
 The next thing is to actually use it. So in your bootstrap.php, index.php, or what ever you load up first:
 
