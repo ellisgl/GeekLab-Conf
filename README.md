@@ -13,7 +13,10 @@ Configuration system for PHP >= 7.1
 composer require geeklab/conf
 
 ## Usage:
-TODO
+* [INI](/docs/INI.md)
+* [Array](/docs/Array.md)
+* [JSON](/docs/JSON.md)
+* [YAML](/docs/YAML.md)
 
 ## Todo:
 * More Documentation.
