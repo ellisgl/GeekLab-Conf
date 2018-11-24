@@ -1,5 +1,13 @@
 ### Usage
-Setup a primary INI (system.ini, main.ini, moneky.ini or what ever you want to call it). See [/tests/data/ini/system.ini](/tests/data/ini/system.ini) for an example.
+Setup a primary INI (system.ini, main.ini, moneky.ini or what ever you want to call it).
+
+```ini
+service = CrazyWebApp
+env = dev
+conf[] = webapp
+conf[] = dev
+conf[] = ellisgl
+```
 
 This base file does not have any sections (but it could). The important property is `conf[]`, this tells the loader which INI files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 

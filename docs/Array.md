@@ -1,5 +1,18 @@
 ### Usage
-Setup a primary Array file (system.php, main.php, moneky.php or what ever you want to call it). See [/tests/data/array/system.php](/tests/data/array/system.php) for an example.
+Setup a primary Array file (system.php, main.php, moneky.php or what ever you want to call it).
+
+```php
+<?php
+return [
+    'service' => 'CrazyWebApp',
+    'env'     => 'dev',
+    'conf'    => [
+        'webapp',
+        'dev',
+        'ellisgl'
+    ]
+];
+```
 
 The important array key is `conf`, this tells the loader which Array files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
