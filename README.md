@@ -18,7 +18,11 @@ composer require geeklab/conf
 * [JSON](/docs/JSON.md)
 * [YAML](/docs/YAML.md)
 
+## Extending:
+* TODO
+
 ## Todo:
 * More Documentation.
 
 ## Change Log
+1.0.0 (2018/11/23): Initial release.
