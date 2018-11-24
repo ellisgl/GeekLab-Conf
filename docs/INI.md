@@ -1,9 +1,9 @@
 ### Usage
-Setup a primary INI (system.ini, main.ini, moneky.ini or what ever you want to call it). See [tests/data/ini/system.ini](tests/data/ini/system.ini) for an example.
+Setup a primary INI (system.ini, main.ini, moneky.ini or what ever you want to call it). See [/tests/data/ini/system.ini](/tests/data/ini/system.ini) for an example.
 
 This base file does not have any sections (but it could). The important property is `conf[]`, this tells the loader which INI files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary INIs (E.g. webapp.ini, dev.ini, elllisgl.ini, etc...). See [tests/data/ini](tests/data/ini) for examples.
+Setup your secondary INIs (E.g. webapp.ini, dev.ini, elllisgl.ini, etc...). See [/tests/data/ini](/tests/data/ini) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
