@@ -1,5 +1,5 @@
 ### Usage
-Setup a primary INI (system.json, main.json, moneky.json or what ever you want to call it). See [/tests/data/json/system.json](/tests/data/ini/system.json) for an example.
+Setup a primary JSON (system.json, main.json, moneky.json or what ever you want to call it). See [/tests/data/json/system.json](/tests/data/ini/system.json) for an example.
 
 This base file does not have any sections (but it could). The important property is `conf[]`, this tells the loader which INI files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 

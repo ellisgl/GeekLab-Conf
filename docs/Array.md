@@ -1,5 +1,5 @@
 ### Usage
-Setup a primary INI (system.ini, main.ini, moneky.ini or what ever you want to call it). See [/tests/data/array/system.php](/tests/data/array/system.php) for an example.
+Setup a primary Array file (system.php, main.php, moneky.php or what ever you want to call it). See [/tests/data/array/system.php](/tests/data/array/system.php) for an example.
 
 The important array key is `conf`, this tells the loader which Array files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
@@ -11,11 +11,11 @@ You'd probably want these in another directory, like /conf. also don't forget to
 
 You might notice something in the `dev.php`, `@[%database.host]` and `@[database.db%]`.
 
-These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `{%data.host%}` would be filled with `localhost` and  `{%database.db%}` would be replaced with `ellisgldb`, since the last INI `ellisgl.ini` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.ini`.
+These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `{%data.host%}` would be filled with `localhost` and  `{%database.db%}` would be replaced with `ellisgldb`, since the last INI `ellisgl.php` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.php`.
 
 Also in the `ellisgl.php`, there is a `$[DB_CHARSET]` placeholder which will be replaced by the contents of the environmental variable `DB_CHARSET`.
 
-You can also do a recursive self referenced placeholder replacement. If you look at the `ellisgl.ini`, you might notice `'a' => '@[selfreferencedplaceholder.@[somestuff.a]]'` which would become `@[selfreferencedplaceholder.x]` and then finally become `We Can Do That!`. 
+You can also do a recursive self referenced placeholder replacement. If you look at the `ellisgl.php`, you might notice `'a' => '@[selfreferencedplaceholder.@[somestuff.a]]'` which would become `@[selfreferencedplaceholder.x]` and then finally become `We Can Do That!`. 
 
 The next thing is to actually use it. So in your bootstrap.php, index.php, or what ever you load up first:
 
