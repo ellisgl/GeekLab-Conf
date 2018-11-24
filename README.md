@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/ellisgl/GeekLab-Conf.svg?branch=master)](https://travis-ci.com/ellisgl/GeekLab-Conf)
+
 # geeklab\conf
 Configuration system for PHP >= 7.1
 
