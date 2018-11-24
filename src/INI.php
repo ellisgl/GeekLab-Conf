@@ -30,9 +30,9 @@ final class INI extends ConfAbstract
     }
 
     /**
-     * Load in the configuration files.
+     * Initialize the configuration system.
      */
-    public function load(): void
+    public function init(): void
     {
         // Load and parse the main INI file.
         $this->conf = parse_ini_file($this->mainFile);

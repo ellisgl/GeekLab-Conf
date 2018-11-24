@@ -22,7 +22,7 @@ class ConfINI extends TestCase
 
         // Let's get loaded.
         self::$configuration = new Conf\INI($systemFile, $configurationDirectory);
-        self::$configuration->load();
+        self::$configuration->init();
 
         // Sometimes you just want to see it.
         //var_dump(self::$configuration->getAll());

@@ -33,5 +33,5 @@ interface ConfInterface
      *   Conform those.
      *   Replace the placeholders.
      */
-    public function load(): void;
+    public function init(): void;
 }
