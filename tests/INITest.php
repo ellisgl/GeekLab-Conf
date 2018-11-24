@@ -13,15 +13,12 @@ class ConfINI extends TestCase
     // Set this up once for all the tests in side this.
     public static function setUpBeforeClass()
     {
-        // Let's get less descriptive.
-        define('DS', DIRECTORY_SEPARATOR);
+        // Load in a the main INI configuration.
+        // Where the configurations are.
+        $configurationDirectory = __DIR__ . '/data/INI/';
 
-        // Load in a the main INI with just Webapp and Dev.
         // Main INI file.
-        $systemFile = __DIR__ . DS . 'data' . DS . 'ini' . DS . 'system.ini';
-
-        // Where configuration INIs are.
-        $configurationDirectory = __DIR__ . DS . 'data' . DS . 'ini' . DS;
+        $systemFile = $configurationDirectory . 'system.INI';
 
         // Let's get loaded.
         self::$configuration = new Conf\INI($systemFile, $configurationDirectory);
