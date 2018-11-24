@@ -12,7 +12,7 @@ conf:
 
 The important key is `conf`, this tells the loader which YAML files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary INIs (E.g. webapp.yaml, dev.yaml, elllisgl.yaml, etc...). See [/tests/data/yaml](/tests/data/yaml) for examples.
+Setup your secondary YAMLs (E.g. webapp.yaml, dev.yaml, elllisgl.yaml, etc...). See [/tests/data/yaml](/tests/data/yaml) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
@@ -20,7 +20,7 @@ You'd probably want these in another directory, like /conf. also don't forget to
 
 You might notice something in the `dev.yaml`, `@[%database.host]` and `@[database.db%]`.
 
-These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `@[data.host]` would be filled with `localhost` and  `@[database.db]` would be replaced with `ellisgldb`, since the last INI `ellisgl.yaml` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.yaml`.
+These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `@[data.host]` would be filled with `localhost` and  `@[database.db]` would be replaced with `ellisgldb`, since the last YAML `ellisgl.yaml` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.yaml`.
 
 Also in the `ellisgl.yaml`, there is a `$[DB_CHARSET]` placeholder which will be replaced by the contents of the environmental variable `DB_CHARSET`.
 
@@ -32,10 +32,10 @@ The next thing is to actually use it. So in your bootstrap.php, index.php, or wh
 <?php
 require_once('/path/to/your/vendor/autoload.php');
 
-// Main INI file.
+// Main YAML file.
 $systemFile = '/path/to/your/main-system-monkey.yaml';
 
-// Where configuration INIs are.
+// Where configuration YAMLs are.
 $confDir = '/path/to/your/yamls/';
 
 // Start 'er up!

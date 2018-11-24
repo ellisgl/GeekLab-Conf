@@ -24,7 +24,7 @@ You'd probably want these in another directory, like /conf. also don't forget to
 
 You might notice something in the `dev.php`, `@[%database.host]` and `@[database.db%]`.
 
-These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `{%data.host%}` would be filled with `localhost` and  `{%database.db%}` would be replaced with `ellisgldb`, since the last INI `ellisgl.php` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.php`.
+These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `{%data.host%}` would be filled with `localhost` and  `{%database.db%}` would be replaced with `ellisgldb`, since the last Array `ellisgl.php` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.php`.
 
 Also in the `ellisgl.php`, there is a `$[DB_CHARSET]` placeholder which will be replaced by the contents of the environmental variable `DB_CHARSET`.
 
@@ -36,10 +36,10 @@ The next thing is to actually use it. So in your bootstrap.php, index.php, or wh
 <?php
 require_once('/path/to/your/vendor/autoload.php');
 
-// Main INI file.
+// Main Array file.
 $systemFile = '/path/to/your/main-system-monkey.php';
 
-// Where configuration INIs are.
+// Where configuration Arrays are.
 $confDir = '/path/to/your/arrays/';
 
 // Start 'er up!

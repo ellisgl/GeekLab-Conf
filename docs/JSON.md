@@ -15,7 +15,7 @@ Setup a primary JSON (system.json, main.json, moneky.json or what ever you want 
 
 The importan key is `conf`, this tells the loader which JSON files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary INIs (E.g. webapp.json, dev.json, elllisgl.json, etc...). See [/tests/data/json](/tests/data/json) for examples.
+Setup your secondary JSONs (E.g. webapp.json, dev.json, elllisgl.json, etc...). See [/tests/data/json](/tests/data/json) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
@@ -23,7 +23,7 @@ You'd probably want these in another directory, like /conf. also don't forget to
 
 You might notice something in the `dev.json`, `@[%database.host]` and `@[database.db%]`.
 
-These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `@[data.host]` would be filled with `localhost` and  `{%database.db]` would be replaced with `ellisgldb`, since the last INI `ellisgl.json` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.json`.
+These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `@[data.host]` would be filled with `localhost` and  `{%database.db]` would be replaced with `ellisgldb`, since the last JSON `ellisgl.json` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.json`.
 
 Also in the `ellisgl.json`, there is a `$[DB_CHARSET]` placeholder which will be replaced by the contents of the environmental variable `DB_CHARSET`.
 
@@ -35,10 +35,10 @@ The next thing is to actually use it. So in your bootstrap.php, index.php, or wh
 <?php
 require_once('/path/to/your/vendor/autoload.php');
 
-// Main INI file.
+// Main JSON file.
 $systemFile = '/path/to/your/main-system-monkey.json';
 
-// Where configuration INIs are.
+// Where configuration JSONs are.
 $confDir = '/path/to/your/jsons/';
 
 // Start 'er up!
