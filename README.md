@@ -22,6 +22,11 @@ composer require geeklab/conf
 ## Extending:
 * TODO
 
+PSR Compliance:
+* PSR-1
+* PSR-2
+* PSR-4
+
 ## Benchmarks (If you know of a library like this one, I would like to compare it.)
 
 * Revs: 100
