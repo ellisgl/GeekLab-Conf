@@ -166,4 +166,46 @@ abstract class ConfAbstract implements ConfInterface
 
         return $data;
     }
+
+
+    /**
+     * Load and do stuff the configuration files.
+     *
+     * @param callable $innerCallback
+     * @param callable $outerCallback
+     */
+    protected function load(callable $innerCallback, callable $outerCallback)
+    {
+        // Run innerCallback to load in main configuration array.
+        $this->conf = $innerCallback();
+
+        // Conform the array: uppercase and changes spaces to underscores in keys.
+        $this->conf = $this->conformArray($this->conf);
+
+        // Load in the extra configuration via the CONF property.
+
+        if (isset($this->conf['CONF']) && is_array($this->conf['CONF'])) {
+            foreach ($this->conf['CONF'] as $file) {
+                // Use the callback ($outerCallback) to load the configuration file.
+                $conf = $outerCallback($this->confLocation . $file);
+
+                // Uppercase and change spaces and periods to underscores in key names.
+                $conf = $this->conformArray($conf);
+
+                // Strip out anything that wasn't in a section
+                // We don't want the ability to overwrite stuff from main INI file.
+                foreach ($conf as $k => $v) {
+                    if (!is_array($v)) {
+                        unset($conf[$k]);
+                    }
+                }
+
+                // Combine/Merge/Overwrite new configuration with current.
+                $this->conf = array_replace_recursive($this->conf, $conf);
+            }
+        }
+
+        // Fill in the placeholders.
+        $this->conf = $this->replacePlaceholders($this->conf);
+    }
 }
