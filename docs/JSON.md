@@ -13,7 +13,7 @@ Setup a primary JSON (system.json, main.json, moneky.json or what ever you want 
 }
 ```
 
-This base file does not have any sections (but it could). The important property is `conf[]`, this tells the loader which INI files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
+The importan key is `conf`, this tells the loader which JSON files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
 Setup your secondary INIs (E.g. webapp.json, dev.json, elllisgl.json, etc...). See [/tests/data/json](/tests/data/json) for examples.
 

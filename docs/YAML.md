@@ -10,7 +10,7 @@ conf:
   - ellisgl
 ```
 
-This base file does not have any sections (but it could). The important property is `conf[]`, this tells the loader which INI files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
+The important key is `conf`, this tells the loader which YAML files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
 Setup your secondary INIs (E.g. webapp.yaml, dev.yaml, elllisgl.yaml, etc...). See [/tests/data/yaml](/tests/data/yaml) for examples.
 

@@ -14,7 +14,7 @@ return [
 ];
 ```
 
-The important array key is `conf`, this tells the loader which Array files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
+The important array key is `conf`, this tells the loader which Array (PHP) files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
 Setup your secondary Arrays (E.g. webapp.php, dev.php, elllisgl.php, etc...). See [/tests/data/php](/tests/data/php) for examples.
 
