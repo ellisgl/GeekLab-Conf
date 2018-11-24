@@ -11,11 +11,11 @@ You'd probably want these in another directory, like /conf. also don't forget to
 
 You might notice something in the `dev.ini`, `@[%database.host]` and `@[database.db%]`.
 
-These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `{%data.host%}` would be filled with `localhost` and  `{%database.db%}` would be replaced with `ellisgldb`, since the last INI `ellisgl.ini` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.ini`.
+These are self referenced placeholders. When the configuration is being compiled, the last step is to replace those placeholders with something from with in the configuration. `@[data.host]` would be filled with `localhost` and  `@[database.db]` would be replaced with `ellisgldb`, since the last INI `ellisgl.ini` imported had database -> db set to `ellisgldb` it overwrote the value that came from `dev.ini`.
 
 Also in the `ellisgl.ini`, there is a `$[DB_CHARSET]` placeholder which will be replaced by the contents of the environmental variable `DB_CHARSET`.
 
-You can also do a recursive self referenced placeholder replacement. If you look at the `ellisgl.ini`, you might notice `a = {%selfreferencedplaceholder.{%somestuff.a%}%}` which would become `$[selfreferencedplaceholder.x]` and then finally become `We Can Do That!`. 
+You can also do a recursive self referenced placeholder replacement. If you look at the `ellisgl.ini`, you might notice `a = @[selfreferencedplaceholder.@[somestuff.a]]` which would become `$[selfreferencedplaceholder.x]` and then finally become `We Can Do That!`. 
 
 The next thing is to actually use it. So in your bootstrap.php, index.php, or what ever you load up first:
 
