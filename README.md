@@ -1,7 +1,8 @@
 [![Build Status](https://travis-ci.com/ellisgl/GeekLab-Conf.svg?branch=master)](https://travis-ci.com/ellisgl/GeekLab-Conf)
+[![Coverage](https://codecov.io/gh/ellisgl/GeekLab-Conf/branch/master/graph/badge.svg)](https://codecov.io/gh/ellisgl/GeekLab-Conf)
 
 # geeklab/conf
-Immutable configuration system loader & parser for PHP >= 7.1 that support multiple file formats and has some "templating" features.
+Immutable configuration system loader & parser for PHP >= 7.2 that support multiple file formats and has some "templating" features.
 
 ## Features:
 * Multi-file configuration loading, no more monolithic configurations!
@@ -27,7 +28,7 @@ PSR Compliance:
 * PSR-2
 * PSR-4
 
-## Benchmarks (If you know of a library like this one, I would like to compare it.)
+## Benchmarks (If you know of a library like this one, I would like to compare it.) (Op Cache disabled - will need to update these later.)
 
 * Revs: 100
 * Iterations: 100
