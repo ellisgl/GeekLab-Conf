@@ -13,7 +13,7 @@ class YAMLTest extends TestCase
     {
         // Load in a the main INI configuration.
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/data/YAML/';
+        $configurationDirectory = __DIR__ . '/data/yaml/';
 
         // Main INI file.
         $systemFile = $configurationDirectory . 'system.yaml';
@@ -29,13 +29,13 @@ class YAMLTest extends TestCase
     /** @test */
     public function testThatItIsAnObject(): void
     {
-        $this->assertTrue(is_object(self::$configuration), 'INI is not an object!');
+        $this->assertTrue(is_object(self::$configuration), 'YAML is not an object!');
     }
 
     /** @test */
     public function testThatItImplementsConfigurationInterface(): void
     {
-        $this->assertInstanceOf('GeekLab\Conf\ConfInterface', self::$configuration, 'Conf\YAML does not implement Conf\ConfnInterface!');
+        $this->assertInstanceOf('GeekLab\Conf\ConfInterface', self::$configuration, 'Conf\YAML does not implement Conf\ConfInterface!');
     }
 
     /** @test */
