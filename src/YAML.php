@@ -16,11 +16,11 @@ final class YAML extends ConfAbstract
         $this->load(
             function () {
                 // Load in the main configuration file and return an array.
-                return  yaml_parse_file($this->mainFile);
+                return  \yaml_parse_file($this->mainFile);
             },
             function ($file) use ($self) {
                 // Load in the inner configurations and return an array.
-                return  yaml_parse_file($file . '.yaml');
+                return  \yaml_parse_file($file . '.yaml');
             }
         );
     }
