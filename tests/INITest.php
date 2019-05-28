@@ -16,7 +16,7 @@ class INITest extends TestCase
         $configurationDirectory = __DIR__ . '/data/ini/';
 
         // Main INI file.
-        $systemFile = $configurationDirectory . 'system.INI';
+        $systemFile = $configurationDirectory . 'system.ini';
 
         // Let's get loaded.
         self::$configuration = new Conf\INI($systemFile, $configurationDirectory);
