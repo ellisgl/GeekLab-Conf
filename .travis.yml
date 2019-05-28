@@ -9,7 +9,8 @@ php:
   - '7.3'
 before_install:
   - pecl channel-update pecl.php.net
-  - (CFLAGS="-O1 -g3 -fno-strict-aliasing"; pecl install yaml < /dev/null &)
+  - printf "\n" | pecl install yaml
+  - echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 addons:
   apt:
     packages:
