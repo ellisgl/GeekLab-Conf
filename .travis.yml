@@ -7,6 +7,9 @@ language: php
 php:
   - '7.2'
   - '7.3'
+before_install:
+  - pecl channel-update pecl.php.net
+  - (CFLAGS="-O1 -g3 -fno-strict-aliasing"; pecl install yaml < /dev/null &)
 script:
   - php vendor/bin/phpcs --standard=psr2 src/ -n
   - composer test -- --coverage-clover=coverage.xml
