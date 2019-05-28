@@ -3,7 +3,7 @@
 use GeekLab\Conf;
 use PHPUnit\Framework\TestCase;
 
-class ConfJSON extends TestCase
+class JSONTest extends TestCase
 {
     /** @var Conf\JSON $configuration */
     protected static $configuration;

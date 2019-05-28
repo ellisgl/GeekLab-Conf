@@ -3,7 +3,7 @@
 use GeekLab\Conf;
 use PHPUnit\Framework\TestCase;
 
-class ConfYAML extends TestCase
+class YAMLTest extends TestCase
 {
     /** @var Conf\JSON $configuration */
     protected static $configuration;

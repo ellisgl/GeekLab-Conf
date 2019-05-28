@@ -3,7 +3,7 @@
 use GeekLab\Conf;
 use PHPUnit\Framework\TestCase;
 
-class ConfINI extends TestCase
+class INITest extends TestCase
 {
     /** @var Conf\INI $configuration */
     protected static $configuration;

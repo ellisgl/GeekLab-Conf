@@ -3,7 +3,7 @@
 use GeekLab\Conf;
 use PHPUnit\Framework\TestCase;
 
-class ConfArr extends TestCase
+class ArrTest extends TestCase
 {
     /** @var Conf\Arr $configuration */
     protected static $configuration;
