@@ -62,6 +62,9 @@ class GLConfTest extends TestCase
 
         // Test we do not replace unknown environment variables.
         $this->assertEquals('$[DOESNOTEXIST]', $configuration->get('somestuff.i'), 'GLConf::init replaced a non existing recursive self reference.');
+
+        // Test we striped out the 'out of section' settings.
+        $this->assertEmpty($configuration->get('outofsection'), 'GLConf::init did not strip out of section items.');
     }
 
     public function testArrayConfiguration(): void

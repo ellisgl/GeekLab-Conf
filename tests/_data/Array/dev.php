@@ -1,5 +1,6 @@
 <?php
 return [
+    'outofsection' => '456',
     'database' => [
         'dsn'  => 'mysql:host=@[database.host];dbname=@[database.db]',
         'host' => 'localhost',
