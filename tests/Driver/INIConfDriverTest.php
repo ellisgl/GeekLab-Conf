@@ -25,6 +25,7 @@ class INIConfDriverTest extends TestCase
         $this->assertSame($expected, $driver->parseConfigurationFile());
 
         $expected = [
+            'outofsection' => '456',
             'database' =>
                 [
                     'dsn'  => 'mysql:host=@[database.host];dbname=@[database.db]',
