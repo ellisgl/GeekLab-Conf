@@ -15,7 +15,7 @@ final class JSON extends ConfAbstract
                 // Load in the main configuration file and return an array.
                 return  json_decode(file_get_contents($this->mainFile), true);
             },
-            function ($file)  {
+            function ($file) {
                 // Load in the inner configurations and return an array.
                 return  json_decode(file_get_contents($file . '.json'), true);
             }
