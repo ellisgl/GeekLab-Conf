@@ -2,31 +2,19 @@
 
 namespace GeekLab\Conf;
 
-abstract class ConfAbstract implements ConfInterface
+use GeekLab\Conf\Driver\ConfDriverInterface;
+
+final class GLConf
 {
-    /**
-     * @var string $mainFile Path/filename of the main configuration file.
-     */
-    protected $mainFile;
+    /** @var ConfDriverInterface $driver */
+    private $driver;
 
-    /**
-     * @var string $confLocation Path of the extra configuration files.
-     */
-    protected $confLocation;
+    /** @var array $configuration The compiled configuration. */
+    protected $configuration = [];
 
-    /**
-     * @var array $conf The compiled configuration.
-     */
-    protected $conf = [];
-
-    /**
-     * @param string $mainFile     Path/filename of the main configuration file.
-     * @param string $confLocation Path of the extra configuration files.
-     */
-    public function __construct(string $mainFile, string $confLocation)
+    public function __construct(ConfDriverInterface $driver)
     {
-        $this->mainFile     = $mainFile;
-        $this->confLocation = $confLocation;
+        $this->driver = $driver;
     }
 
     /**
@@ -36,7 +24,7 @@ abstract class ConfAbstract implements ConfInterface
      */
     public function getAll(): array
     {
-        return $this->conf;
+        return $this->configuration;
     }
 
     /**
@@ -56,7 +44,7 @@ abstract class ConfAbstract implements ConfInterface
         /**
          * @var mixed $conf Save conf to local scope.
          */
-        $conf = $this->conf;
+        $conf = $this->configuration;
 
         /**
          * @var bool|array $pos Tokenize the key to do iterations over the conf with.
@@ -120,7 +108,7 @@ abstract class ConfAbstract implements ConfInterface
                     // Find the self referenced placeholders and fill them.
                     $data[$k] = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
                         // Does this key exist, is so fill this match, if not, just return the match intact.
-                        $ret = ($this->get($matches[1])) ? $this->get($matches[1]) : $matches[0];
+                        $ret = $this->get($matches[1]) ? $this->get($matches[1]) : $matches[0];
 
                         return $ret;
                     }, $val);
@@ -149,7 +137,7 @@ abstract class ConfAbstract implements ConfInterface
             }
         } elseif (is_string($data)) {
             // It's a string!
-            // Certain recursive stuff, like @[selfreferencedplaceholder.@[somestuff.a]] is what triggers this part.
+            // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
             // Find the self referenced placeholders and fill them.
             $data = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
@@ -169,43 +157,40 @@ abstract class ConfAbstract implements ConfInterface
 
 
     /**
-     * Load and do stuff the configuration files.
-     *
-     * @param callable $innerCallback
-     * @param callable $outerCallback
+     * Init the configuration system.
      */
-    protected function load(callable $innerCallback, callable $outerCallback)
+    public function init(): void
     {
-        // Run innerCallback to load in main configuration array.
-        $this->conf = $innerCallback();
-
-        // Conform the array: uppercase and changes spaces to underscores in keys.
-        $this->conf = $this->conformArray($this->conf);
+        // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys.).
+        $this->configuration = $this->driver->parseConfigurationFile();
+        $this->configuration = $this->conformArray($this->configuration);
+        $configuration = [];
 
         // Load in the extra configuration via the CONF property.
-
-        if (isset($this->conf['CONF']) && is_array($this->conf['CONF'])) {
-            foreach ($this->conf['CONF'] as $file) {
+        if (isset($this->configuration['CONF']) && is_array($this->configuration['CONF'])) {
+            foreach ($this->configuration['CONF'] as $file) {
                 // Use the callback ($outerCallback) to load the configuration file.
-                $conf = $outerCallback($this->confLocation . $file);
+                $innerConfiguration = $this->driver->parseConfigurationFile($file);
 
                 // Uppercase and change spaces and periods to underscores in key names.
-                $conf = $this->conformArray($conf);
+                $innerConfiguration = $this->conformArray($innerConfiguration);
 
                 // Strip out anything that wasn't in a section
                 // We don't want the ability to overwrite stuff from main INI file.
-                foreach ($conf as $k => $v) {
+                foreach ($innerConfiguration as $k => $v) {
                     if (!is_array($v)) {
-                        unset($conf[$k]);
+                        unset($innerConfiguration[$k]);
                     }
                 }
 
-                // Combine/Merge/Overwrite new configuration with current.
-                $this->conf = array_replace_recursive($this->conf, $conf);
+                $configuration[] = $innerConfiguration;
             }
+
+            // Combine/Merge/Overwrite configuration with current.
+            $this->configuration = array_replace_recursive($this->configuration, ...$configuration);
         }
 
         // Fill in the placeholders.
-        $this->conf = $this->replacePlaceholders($this->conf);
+        $this->configuration = $this->replacePlaceholders($this->configuration);
     }
 }

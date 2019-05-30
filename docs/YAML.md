@@ -1,3 +1,6 @@
+### Requirments
+The PHP YAML extension.
+
 ### Usage
 Setup a primary YAML (system.yaml, main.yaml, moneky.yaml or what ever you want to call it).
 
@@ -12,7 +15,7 @@ conf:
 
 The important key is `conf`, this tells the loader which YAML files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary YAMLs (E.g. webapp.yaml, dev.yaml, elllisgl.yaml, etc...). See [/tests/data/yaml](/tests/data/yaml) for examples.
+Setup your secondary YAMLs (E.g. webapp.yaml, dev.yaml, elllisgl.yaml, etc...). See [/tests/_data/YAML](/tests/_data/YAML) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
@@ -32,18 +35,21 @@ The next thing is to actually use it. So in your bootstrap.php, index.php, or wh
 <?php
 require_once('/path/to/your/vendor/autoload.php');
 
+use GeekLab\Conf\GLConf;
+use GeekLab\Conf\Driver\YAMLConfDriver;
+
 // Main YAML file.
 $systemFile = '/path/to/your/main-system-monkey.yaml';
 
 // Where configuration YAMLs are.
-$confDir = '/path/to/your/yamls/';
+$confDir = '/path/to/your/YAMLs/';
 
 // Start 'er up!
-$conf = new GeekLab\Conf\YAML($systemFile, $confDir);
+$conf = new GLConf(new YAMLConfDriver($systemFile, $confDir));
 $conf->init();
 
 // Do some things.
-define('IS_DEV', ($conf->get('ENV') == 'dev') ? true : false);
+define('IS_DEV', ($conf->get('ENV') === 'dev') ? true : false);
 $db = new PDO($conf->get('database.dsn'), $conf->get('database.user'), $conf->get('database.pass'));
 ```
 

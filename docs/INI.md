@@ -11,7 +11,7 @@ conf[] = ellisgl
 
 This base file does not have any sections (but it could). The important property is `conf[]`, this tells the loader which INI files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary INIs (E.g. webapp.ini, dev.ini, elllisgl.ini, etc...). See [/tests/data/ini](/tests/data/ini) for examples.
+Setup your secondary INIs (E.g. webapp.ini, dev.ini, elllisgl.ini, etc...). See [/tests/_data/INI](/tests/_data/INI) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
@@ -31,6 +31,9 @@ The next thing is to actually use it. So in your bootstrap.php, index.php, or wh
 <?php
 require_once('/path/to/your/vendor/autoload.php');
 
+use GeekLab\Conf\GLConf;
+use GeekLab\Conf\Driver\INIConfDriver;
+
 // Main INI file.
 $systemFile = '/path/to/your/main-system-monkey.ini';
 
@@ -38,12 +41,11 @@ $systemFile = '/path/to/your/main-system-monkey.ini';
 $confDir = '/path/to/your/inis/';
 
 // Start 'er up!
-$conf = new GeekLab\Conf\INI($systemFile, $confDir);
+$conf = new GLConf(new INIConfDriver($systemFile, $confDir));
 $conf->init();
 
 // Do some things.
-define('IS_DEV', ($conf->get('ENV') == 'dev') ? true : false);
+define('IS_DEV', ($conf->get('ENV') === 'dev') ? true : false);
 $db = new PDO($conf->get('database.dsn'), $conf->get('database.user'), $conf->get('database.pass'));
 ```
-
 So for `$conf->get()`, it uses dot notation to access the data, and everything is case insensitive. Also there is a `getAll()` method, which will return an array of the compiled config.
