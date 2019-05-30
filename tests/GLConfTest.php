@@ -67,7 +67,7 @@ class GLConfTest extends TestCase
     public function testArrayConfiguration(): void
     {
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/_data/array/';
+        $configurationDirectory = __DIR__ . '/_data/Array/';
         $configuration = new GLConf(new ArrayConfDriver($configurationDirectory . 'system.php', $configurationDirectory));
 
         $configuration->init();
