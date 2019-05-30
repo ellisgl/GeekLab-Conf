@@ -15,7 +15,7 @@ Setup a primary JSON (system.json, main.json, moneky.json or what ever you want 
 
 The importan key is `conf`, this tells the loader which JSON files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary JSONs (E.g. webapp.json, dev.json, elllisgl.json, etc...). See [/tests/data/json](/tests/data/json) for examples.
+Setup your secondary JSONs (E.g. webapp.json, dev.json, elllisgl.json, etc...). See [/tests/_data/JSON](/tests/_data/JSON) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
@@ -35,18 +35,21 @@ The next thing is to actually use it. So in your bootstrap.php, index.php, or wh
 <?php
 require_once('/path/to/your/vendor/autoload.php');
 
+use GeekLab\Conf\GLConf;
+use GeekLab\Conf\Driver\JSONConfDriver;
+
 // Main JSON file.
 $systemFile = '/path/to/your/main-system-monkey.json';
 
-// Where configuration JSONs are.
+// Where configuration INIs are.
 $confDir = '/path/to/your/jsons/';
 
 // Start 'er up!
-$conf = new GeekLab\Conf\JSON($systemFile, $confDir);
+$conf = new GLConf(new JSONConfDriver($systemFile, $confDir));
 $conf->init();
 
 // Do some things.
-define('IS_DEV', ($conf->get('ENV') == 'dev') ? true : false);
+define('IS_DEV', ($conf->get('ENV') === 'dev') ? true : false);
 $db = new PDO($conf->get('database.dsn'), $conf->get('database.user'), $conf->get('database.pass'));
 ```
 
