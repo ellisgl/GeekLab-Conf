@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
-<phpunit  backupGlobals="false"
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          backupGlobals="false"
           backupStaticAttributes="false"
           colors="true"
           bootstrap="vendor/autoload.php"
@@ -10,12 +11,12 @@
           stopOnFailure="false">
     <testsuites>
         <testsuite name="GeekLab Conf Tests">
-            <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
     <php>
