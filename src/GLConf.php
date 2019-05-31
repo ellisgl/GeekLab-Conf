@@ -176,7 +176,7 @@ final class GLConf
                 $innerConfiguration = $this->conformArray($innerConfiguration);
 
                 // Strip out anything that wasn't in a section
-                // We don't want the ability to overwrite stuff from main INI file.
+                // We don't want the ability to overwrite stuff from main configuration file.
                 foreach ($innerConfiguration as $k => $v) {
                     if (!is_array($v)) {
                         unset($innerConfiguration[$k]);
