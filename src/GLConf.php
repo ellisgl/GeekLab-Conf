@@ -108,9 +108,7 @@ final class GLConf
                     // Find the self referenced placeholders and fill them.
                     $data[$k] = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
                         // Does this key exist, is so fill this match, if not, just return the match intact.
-                        $ret = $this->get($matches[1]) ? $this->get($matches[1]) : $matches[0];
-
-                        return $ret;
+                        return $this->get($matches[1]) ?: $matches[0];
                     }, $val);
 
                     // Find the recursive self referenced placeholders and fill them.
@@ -119,7 +117,7 @@ final class GLConf
                     }
 
                     // Find the environment variable placeholders and fill them.
-                    $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
+                    $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)\]/', static function ($matches) {
                         if (!empty(getenv($matches[1], true))) {
                             $ret = getenv($matches[1], true);
                         } elseif (!empty(getenv($matches[1]))) {
@@ -141,7 +139,7 @@ final class GLConf
             // Find the self referenced placeholders and fill them.
             $data = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
-                $ret = ($this->get($matches[1])) ? $this->get($matches[1]) : $matches[0];
+                $ret = $this->get($matches[1]) ?: $matches[0];
 
                 // Looks like we have a recursive self referenced placeholder.
                 if ($ret !== $matches[0] && preg_match('/\@\[(.*?)\]/', $matches[0])) {
