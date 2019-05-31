@@ -119,10 +119,10 @@ final class GLConf
                     // Find the environment variable placeholders and fill them.
                     $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)\]/', static function ($matches) {
                         if (!empty(getenv($matches[1], true))) {
+                            // Try local only environment variables first (variable not set by a SAPI)
                             $ret = getenv($matches[1], true);
-                        } elseif (!empty(getenv($matches[1]))) {
-                            $ret = getenv($matches[1]);
                         } else {
+                            // No match, so keep it the same.
                             $ret = $matches[0];
                         }
 
