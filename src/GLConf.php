@@ -144,7 +144,7 @@ final class GLConf
                 $ret = ($this->get($matches[1])) ? $this->get($matches[1]) : $matches[0];
 
                 // Looks like we have a recursive self referenced placeholder.
-                if ($ret !== $matches[0] && preg_match('/\@\[(.*?)\]/', $ret)) {
+                if ($ret !== $matches[0] && preg_match('/\@\[(.*?)\]/', $matches[0])) {
                     $ret = $this->replacePlaceholders($ret);
                 }
 
