@@ -183,11 +183,12 @@ final class GLConf
                     }
                 }
 
-                // Store conformed configuration into temp array for merging later.
+                // Store conformed configuration into temporary array for merging later.
                 $config[] = $innerConfig;
             }
 
             // Combine/Merge/Overwrite compiled configuration with current.
+            // Uses the splat operator on the arrays stored in the temporary config.
             $this->configuration = array_replace_recursive($this->configuration, ...$config);
         }
 
