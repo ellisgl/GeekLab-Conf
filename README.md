@@ -3,6 +3,7 @@
 
 # geeklab/conf
 Immutable configuration system loader & parser for PHP >= 7.2 that support multiple file formats and has some "templating" features.
+This library is an alternative to '.env' type configuration libraries.
 
 ## Latest
 2.0.2 (2019/5/31): Removed untestable code, which was a potential security risk.
@@ -13,6 +14,7 @@ Immutable configuration system loader & parser for PHP >= 7.2 that support multi
 * Recursive self referencing placeholders. @[@[X.Y.Z].SOME_KEY]
 * Environment variable placeholders. $[ENVIRONMENT_VARIABLE_NAME] (PHP likes "${YOUR_TEXT_HERE}" a little too much...)
 * Can use INI, JSON, YAML and Array files.
+* Immutability, since you shouldn't change your configuration during run time.
 
 ## Installation:
 composer require geeklab/conf
@@ -21,17 +23,22 @@ composer require geeklab/conf
 Basic:
 ```PHP
 // Where the configurations are.
-$configurationDirectory = __DIR__ . '/_data/JSON/';
+$configurationDirectory = __DIR__ . '/config/';
 
 // Load Configuration system with the JSON Configuration Driver 
-$configuration = new GLConf(new JSONConfDriver($configurationDirectory . 'system.json', $configurationDirectory));
+$configuration = new GLConf(
+    new JSONConfDriver(
+        $configurationDirectory . 'system.json',  // Path and file name of main (top level) configuration.
+        $configurationDirectory                   // Path to the other configuation files. 
+    )
+);
+
 $configuration->init();
 
-
-// So it all to me!
+// Get the whole configuration.
 var_export($configuration->getAll());
 
-// Get one thing.
+// Get one item.
 var_export($configuration->get('space_pants.look_at_my'));
 ```
 
@@ -48,5 +55,5 @@ PSR Compliance:
 
 ## Todo:
 * More Documentation.
-* Bench Marks
+* Benchmarks.
 
