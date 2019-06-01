@@ -5,7 +5,7 @@
 Immutable configuration system loader & parser for PHP >= 7.2 that support multiple file formats and has some "templating" features.
 
 ## Latest
-2.0.1 (2019/5/30): Fixed possible issue with self referencing placeholders.
+2.0.2 (2019/5/31): Removed untestable code, which was a potential security risk.
 
 ## Features:
 * Multi-file configuration loading, no more monolithic configurations!

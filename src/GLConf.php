@@ -36,51 +36,52 @@ final class GLConf
      */
     public function get(string $key)
     {
-        /**
-         * @var string $key convert key to upper case.
-         */
+        /** @var string $key Convert key to upper case. */
         $key = strtoupper($key);
 
-        /**
-         * @var mixed $conf Save conf to local scope.
-         */
-        $conf = $this->configuration;
+        /** @var mixed $config Save configuration for local scope modification. */
+        $config = $this->configuration;
 
-        /**
-         * @var bool|array $pos Tokenize the key to do iterations over the conf with.
-         */
-        $pos = strtok($key, '.');
+        /** @var bool|array $token Tokenize the key to do iterations over the config with. */
+        $token = strtok($key, '.');
 
-        while ($pos !== false) {
-            if (!isset($conf[$pos])) {
+        // Loop until we are out of tokens.
+        while ($token !== false) {
+            if (!isset($config[$token])) {
+                // Array key of $token wasn't found.
                 return false;
             }
 
-            $conf = $conf[$pos];
-            $pos  = strtok('.');
+            // Save the data found.
+            $config = $config[$token];
+
+            // Advanced to the next token, or set token to false if nothing else if left..
+            $token  = strtok('.');
         }
 
-        return $conf;
+        // Return the valid found by the previous loop.
+        return $config;
     }
 
     /**
-     * Make the array conform to some standards.
-     *   Convert key names to uppercase.
-     *   Convert spaces and periods to underscores.
+     * Make the array conform to some sort of standard.
+     * -  Convert key names to uppercase.
+     * -  Convert spaces and periods to underscores.
      *
      * @param array $arr
+     *
      * @return array
      */
     protected function conformArray(array $arr): array
     {
         // Store our conformed array for returning.
-        $fixed = array();
+        $fixed = [];
 
-        // Convert keys to uppercase
+        // Convert keys to uppercase.
         $arr = array_change_key_case($arr, CASE_UPPER);
 
         foreach ($arr as $k => $v) {
-            // Recursively conform inner arrays.
+            // Recursively conform the inner arrays.
             if (is_array($v)) {
                 $v = $this->conformArray($v);
             }
@@ -118,18 +119,19 @@ final class GLConf
 
                     // Find the environment variable placeholders and fill them.
                     $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)\]/', static function ($matches) {
+                        // If locally set environment variable (variable not set by a SAPI) found, replace with it's value.
                         if (!empty(getenv($matches[1], true))) {
                             // Try local only environment variables first (variable not set by a SAPI)
                             $ret = getenv($matches[1], true);
                         } else {
-                            // No match, so keep it the same.
+                            // Don't replace.
                             $ret = $matches[0];
                         }
 
                         return $ret;
                     }, $data[$k]);
                 } else {
-                    // Go into the array.
+                    // Recursively replace placeholders.
                     $data[$k] = $this->replacePlaceholders($val);
                 }
             }
@@ -155,37 +157,38 @@ final class GLConf
 
 
     /**
-     * Init the configuration system.
+     * Initialize the configuration system.
      */
     public function init(): void
     {
         // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys.).
         $this->configuration = $this->driver->parseConfigurationFile();
         $this->configuration = $this->conformArray($this->configuration);
-        $configuration = [];
+        $config = [];
 
         // Load in the extra configuration via the CONF property.
         if (isset($this->configuration['CONF']) && is_array($this->configuration['CONF'])) {
             foreach ($this->configuration['CONF'] as $file) {
-                // Use the callback ($outerCallback) to load the configuration file.
-                $innerConfiguration = $this->driver->parseConfigurationFile($file);
+                // Load in the referenced configuration from the main configuration.
+                $innerConfig = $this->driver->parseConfigurationFile($file);
 
-                // Uppercase and change spaces and periods to underscores in key names.
-                $innerConfiguration = $this->conformArray($innerConfiguration);
+                // Conform the configuration array.
+                $innerConfig = $this->conformArray($innerConfig);
 
-                // Strip out anything that wasn't in a section
+                // Strip out anything that wasn't in a section (non-array value at the top level).
                 // We don't want the ability to overwrite stuff from main configuration file.
-                foreach ($innerConfiguration as $k => $v) {
+                foreach ($innerConfig as $k => $v) {
                     if (!is_array($v)) {
-                        unset($innerConfiguration[$k]);
+                        unset($innerConfig[$k]);
                     }
                 }
 
-                $configuration[] = $innerConfiguration;
+                // Store conformed configuration into temp array for merging later.
+                $config[] = $innerConfig;
             }
 
-            // Combine/Merge/Overwrite configuration with current.
-            $this->configuration = array_replace_recursive($this->configuration, ...$configuration);
+            // Combine/Merge/Overwrite compiled configuration with current.
+            $this->configuration = array_replace_recursive($this->configuration, ...$config);
         }
 
         // Fill in the placeholders.

@@ -4,7 +4,7 @@ namespace GeekLab\Conf\Driver;
 
 final class YAMLConfDriver implements ConfDriverInterface
 {
-    /** @var string $mainConfigurationFile File name of the top configuration file. */
+    /** @var string $mainConfigurationFile Path and file name of the top configuration file. */
     private $mainConfigurationFile;
 
     /** @var string $configurationLocation Path of the configuration files. */
@@ -25,7 +25,7 @@ final class YAMLConfDriver implements ConfDriverInterface
     /**
      * Load and parse a configuration file and return an array.
      *
-     * @param string|null $file
+     * @param string|null $file If null, then load the main configuration file
      *
      * @return array
      */
