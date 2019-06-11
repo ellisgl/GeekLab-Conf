@@ -12,6 +12,12 @@ final class GLConf
     /** @var array $configuration The compiled configuration. */
     protected $configuration = [];
 
+    /**
+     * GLConf constructor.
+     * Inject our driver (strategy) here.
+     *
+     * @param ConfDriverInterface $driver
+     */
     public function __construct(ConfDriverInterface $driver)
     {
         $this->driver = $driver;
@@ -32,6 +38,7 @@ final class GLConf
      * Stolen from: https://stackoverflow.com/a/14706302/344028
      *
      * @param string $key dot notated array key accessor.
+     *
      * @return mixed
      */
     public function get(string $key)
@@ -107,18 +114,18 @@ final class GLConf
             foreach ($data as $k => $val) {
                 if (!is_array($val)) {
                     // Find the self referenced placeholders and fill them.
-                    $data[$k] = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
+                    $data[$k] = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
                         // Does this key exist, is so fill this match, if not, just return the match intact.
                         return $this->get($matches[1]) ?: $matches[0];
                     }, $val);
 
                     // Find the recursive self referenced placeholders and fill them.
-                    if ($data[$k] !== $val && preg_match('/\@\[([a-zA-Z0-9_.-]*?)\]/', $data[$k])) {
+                    if ($data[$k] !== $val && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data[$k])) {
                         $data[$k] = $this->replacePlaceholders($data[$k]);
                     }
 
                     // Find the environment variable placeholders and fill them.
-                    $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)\]/', static function ($matches) {
+                    $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)]/', static function ($matches) {
                         // If locally set environment variable (variable not set by a SAPI) found, replace with it's value.
                         if (!empty(getenv($matches[1], true))) {
                             // Try local only environment variables first (variable not set by a SAPI)
@@ -139,12 +146,12 @@ final class GLConf
             // It's a string!
             // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
             // Find the self referenced placeholders and fill them.
-            $data = preg_replace_callback('/\@\[([a-zA-Z0-9_.-]*?)\]/', function ($matches) {
+            $data = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
                 $ret = $this->get($matches[1]) ?: $matches[0];
 
                 // Looks like we have a recursive self referenced placeholder.
-                if ($ret !== $matches[0] && preg_match('/\@\[(.*?)\]/', $matches[0])) {
+                if ($ret !== $matches[0] && preg_match('/@\[(.*?)]/', $matches[0])) {
                     $ret = $this->replacePlaceholders($ret);
                 }
 
@@ -161,7 +168,7 @@ final class GLConf
      */
     public function init(): void
     {
-        // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys.).
+        // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys).
         $this->configuration = $this->driver->parseConfigurationFile();
         $this->configuration = $this->conformArray($this->configuration);
         $config = [];
