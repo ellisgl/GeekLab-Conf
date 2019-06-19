@@ -154,7 +154,7 @@ final class GLConf
     private function stringPlaceholderHandler(string $data): string
     {
         // Find the self referenced placeholders and fill them.
-        return preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
+        $data = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
             // Does this key exist, is so fill this match, if not, just return the match intact.
             $ret = $this->get($matches[1]) ?: $matches[0];
 
@@ -165,6 +165,8 @@ final class GLConf
 
             return $ret;
         }, $data);
+
+        return $data ?? '';
     }
 
     /**
@@ -220,7 +222,7 @@ final class GLConf
 
             // Combine/Merge/Overwrite compiled configuration with current.
             // Uses the splat operator on the arrays stored in the temporary config.
-            $this->configuration = array_replace_recursive($this->configuration, ...$config);
+            $this->configuration = array_replace_recursive($this->configuration, ...$config) ?? [];
         }
 
         // Fill in the placeholders.
