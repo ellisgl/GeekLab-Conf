@@ -32,9 +32,11 @@ final class INIConfDriver implements ConfDriverInterface
     public function parseConfigurationFile(?string $file = null): array
     {
         if ($file === null) {
-            return parse_ini_file($this->mainConfigurationFile);
+            $parsed = parse_ini_file($this->mainConfigurationFile);
+        } else {
+            $parsed = parse_ini_file($this->configurationLocation . $file . '.ini', true);
         }
 
-        return parse_ini_file($this->configurationLocation . $file . '.ini', true);
+        return (!empty($parsed)) ? $parsed : [];
     }
 }
