@@ -1,7 +1,6 @@
 <?php
 
 namespace GeekLab\Conf\Driver;
-use  \yaml_parse_file;
 
 final class YAMLConfDriver implements ConfDriverInterface
 {

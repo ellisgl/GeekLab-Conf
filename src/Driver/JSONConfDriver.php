@@ -31,11 +31,8 @@ final class JSONConfDriver implements ConfDriverInterface
      */
     public function parseConfigurationFile(?string $file = null): array
     {
-
-        $fileContents = file_get_contents(
-            $file === null
-                ? $this->mainConfigurationFile
-                : $this->configurationLocation . $file . '.json');
+        $fileName = $file === null ? $this->mainConfigurationFile : $this->configurationLocation . $file . '.json';
+        $fileContents = file_get_contents($fileName);
 
         return !empty($fileContents) ? json_decode($fileContents, true) : [];
     }
