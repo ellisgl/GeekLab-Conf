@@ -24,7 +24,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "phpstan": "phpstan analyse src --level=5",
+        "phpstan": "phpstan analyse src --level=7",
         "phpcs" : "phpcs src/ --standard=PSR2 -n"
     }
 }
