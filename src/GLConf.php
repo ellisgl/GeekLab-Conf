@@ -102,6 +102,67 @@ final class GLConf
     }
 
     /**
+     * @param array $data
+     * @return array
+     */
+    private function arrayPlaceholderHandler(array $data): array
+    {
+        // It's an array, so let's loop through it.
+        foreach ($data as $k => $val) {
+            if (!is_array($val)) {
+                // Find the self referenced placeholders and fill them.
+                $data[$k] = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
+                    // Does this key exist, is so fill this match, if not, just return the match intact.
+                    return $this->get($matches[1]) ?: $matches[0];
+                }, $val);
+
+                // Find the recursive self referenced placeholders and fill them.
+                if ($data[$k] !== $val && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data[$k])) {
+                    $data[$k] = $this->replacePlaceholders($data[$k]);
+                }
+
+                // Find the environment variable placeholders and fill them.
+                $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)]/', static function ($matches) {
+                    // If locally set environment variable (variable not set by a SAPI) found, replace with it's value.
+                    if (!empty(getenv($matches[1], true))) {
+                        // Try local only environment variables first (variable not set by a SAPI)
+                        $ret = getenv($matches[1], true);
+                    } else {
+                        // Don't replace.
+                        $ret = $matches[0];
+                    }
+
+                    return $ret;
+                }, $data[$k]);
+            } else {
+                // Recursively replace placeholders.
+                $data[$k] = $this->replacePlaceholders($val);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    private function stringPlaceholderHandler(string $data): string
+    {
+        // Find the self referenced placeholders and fill them.
+        return preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
+            // Does this key exist, is so fill this match, if not, just return the match intact.
+            $ret = $this->get($matches[1]) ?: $matches[0];
+
+            // Looks like we have a recursive self referenced placeholder.
+            if ($ret !== $matches[0] && preg_match('/@\[(.*?)]/', $matches[0])) {
+                $ret = $this->replacePlaceholders($ret);
+            }
+
+            return $ret;
+        }, $data);
+    }
+    /**
      * Self referenced and environment variable placeholder replacement.
      *
      * @param  mixed $data
@@ -110,53 +171,11 @@ final class GLConf
     protected function replacePlaceholders($data)
     {
         if (is_array($data)) {
-            // It's an array, so let's loop through it.
-            foreach ($data as $k => $val) {
-                if (!is_array($val)) {
-                    // Find the self referenced placeholders and fill them.
-                    $data[$k] = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
-                        // Does this key exist, is so fill this match, if not, just return the match intact.
-                        return $this->get($matches[1]) ?: $matches[0];
-                    }, $val);
-
-                    // Find the recursive self referenced placeholders and fill them.
-                    if ($data[$k] !== $val && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data[$k])) {
-                        $data[$k] = $this->replacePlaceholders($data[$k]);
-                    }
-
-                    // Find the environment variable placeholders and fill them.
-                    $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)]/', static function ($matches) {
-                        // If locally set environment variable (variable not set by a SAPI) found, replace with it's value.
-                        if (!empty(getenv($matches[1], true))) {
-                            // Try local only environment variables first (variable not set by a SAPI)
-                            $ret = getenv($matches[1], true);
-                        } else {
-                            // Don't replace.
-                            $ret = $matches[0];
-                        }
-
-                        return $ret;
-                    }, $data[$k]);
-                } else {
-                    // Recursively replace placeholders.
-                    $data[$k] = $this->replacePlaceholders($val);
-                }
-            }
+            $data = $this->arrayPlaceholderHandler($data);
         } elseif (is_string($data)) {
             // It's a string!
             // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
-            // Find the self referenced placeholders and fill them.
-            $data = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
-                // Does this key exist, is so fill this match, if not, just return the match intact.
-                $ret = $this->get($matches[1]) ?: $matches[0];
-
-                // Looks like we have a recursive self referenced placeholder.
-                if ($ret !== $matches[0] && preg_match('/@\[(.*?)]/', $matches[0])) {
-                    $ret = $this->replacePlaceholders($ret);
-                }
-
-                return $ret;
-            }, $data);
+            $data = $this->stringPlaceholderHandler($data);
         }
 
         return $data;
