@@ -113,8 +113,7 @@ final class GLConf
         foreach ($data as $k => $val) {
             if (!is_array($val)) {
                 // Find the self referenced placeholders and fill them.
-                $data[$k] = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches)
-                {
+                $data[$k] = preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
                     // Does this key exist, is so fill this match, if not, just return the match intact.
                     return $this->get($matches[1]) ?: $matches[0];
                 }, $val);
@@ -125,8 +124,7 @@ final class GLConf
                 }
 
                 // Find the environment variable placeholders and fill them.
-                $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)]/', static function ($matches)
-                {
+                $data[$k] = preg_replace_callback('/\$\[([a-zA-Z0-9_.-]*?)]/', static function ($matches) {
                     // If locally set environment variable (variable not set by a SAPI) found, replace with it's value.
                     if (!empty(getenv($matches[1], true))) {
                         // Try local only environment variables first (variable not set by a SAPI)
@@ -156,8 +154,7 @@ final class GLConf
     private function stringPlaceholderHandler(string $data): string
     {
         // Find the self referenced placeholders and fill them.
-        return preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches)
-        {
+        return preg_replace_callback('/@\[([a-zA-Z0-9_.-]*?)]/', function ($matches) {
             // Does this key exist, is so fill this match, if not, just return the match intact.
             $ret = $this->get($matches[1]) ?: $matches[0];
 
@@ -198,7 +195,7 @@ final class GLConf
         // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys).
         $this->configuration = $this->driver->parseConfigurationFile();
         $this->configuration = $this->conformArray($this->configuration);
-        $config              = [];
+        $config = [];
 
         // Load in the extra configuration via the CONF property.
         if (isset($this->configuration['CONF']) && is_array($this->configuration['CONF'])) {
