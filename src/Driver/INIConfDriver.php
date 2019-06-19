@@ -13,13 +13,13 @@ final class INIConfDriver implements ConfDriverInterface
     /**
      * INIConfDriver constructor.
      *
-     * @param string $mainConfigurationFile
-     * @param string $configurationLocation
+     * @param string $mainConfFile
+     * @param string $confLocation
      */
-    public function __construct(string $mainConfigurationFile, string $configurationLocation)
+    public function __construct(string $mainConfFile, string $confLocation)
     {
-        $this->mainConfigurationFile = $mainConfigurationFile;
-        $this->configurationLocation = $configurationLocation;
+        $this->mainConfigurationFile = $mainConfFile;
+        $this->configurationLocation = $confLocation;
     }
 
     /**
@@ -31,11 +31,11 @@ final class INIConfDriver implements ConfDriverInterface
      */
     public function parseConfigurationFile(?string $file = null): array
     {
-        if ($file === null) {
-            $parsed = parse_ini_file($this->mainConfigurationFile);
-        } else {
-            $parsed = parse_ini_file($this->configurationLocation . $file . '.ini', true);
-        }
+        $parsed = parse_ini_file(
+            $file === null
+                ? $this->mainConfigurationFile
+                : $this->configurationLocation . $file . '.ini',
+            $file !== null);
 
         return !empty($parsed) ? $parsed : [];
     }

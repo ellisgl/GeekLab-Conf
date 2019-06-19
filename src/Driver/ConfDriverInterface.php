@@ -7,10 +7,10 @@ interface ConfDriverInterface
     /**
      * ConfDriverInterface constructor.
      *
-     * @param string $mainConfigurationFile Path and file name of the top configuration file.
-     * @param string $configurationLocation Path of the rest of configuration files.
+     * @param string $mainConfFile Path and file name of the top configuration file.
+     * @param string $confLocation Path of the rest of configuration files.
      */
-    public function __construct(string $mainConfigurationFile, string $configurationLocation);
+    public function __construct(string $mainConfFile, string $confLocation);
 
     /**
      * Load and parse a configuration file and return an array.

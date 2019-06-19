@@ -1,6 +1,7 @@
 <?php
 
 namespace GeekLab\Conf\Driver;
+use  \yaml_parse_file;
 
 final class YAMLConfDriver implements ConfDriverInterface
 {
@@ -13,13 +14,13 @@ final class YAMLConfDriver implements ConfDriverInterface
     /**
      * YAMLConfDriver constructor.
      *
-     * @param string $mainConfigurationFile
-     * @param string $configurationLocation
+     * @param string $mainConfFile
+     * @param string $confLocation
      */
-    public function __construct(string $mainConfigurationFile, string $configurationLocation)
+    public function __construct(string $mainConfFile, string $confLocation)
     {
-        $this->mainConfigurationFile = $mainConfigurationFile;
-        $this->configurationLocation = $configurationLocation;
+        $this->mainConfigurationFile = $mainConfFile;
+        $this->configurationLocation = $confLocation;
     }
 
     /**

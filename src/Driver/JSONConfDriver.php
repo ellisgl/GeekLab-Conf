@@ -13,13 +13,13 @@ final class JSONConfDriver implements ConfDriverInterface
     /**
      * JSONConfDriver constructor.
      *
-     * @param string $mainConfigurationFile
-     * @param string $configurationLocation
+     * @param string $mainConfFile
+     * @param string $confLocation
      */
-    public function __construct(string $mainConfigurationFile, string $configurationLocation)
+    public function __construct(string $mainConfFile, string $confLocation)
     {
-        $this->mainConfigurationFile = $mainConfigurationFile;
-        $this->configurationLocation = $configurationLocation;
+        $this->mainConfigurationFile = $mainConfFile;
+        $this->configurationLocation = $confLocation;
     }
 
     /**
@@ -31,11 +31,11 @@ final class JSONConfDriver implements ConfDriverInterface
      */
     public function parseConfigurationFile(?string $file = null): array
     {
-        if ($file === null) {
-            $fileContents = file_get_contents($this->mainConfigurationFile);
-        } else {
-            $fileContents = file_get_contents($this->configurationLocation . $file . '.json');
-        }
+
+        $fileContents = file_get_contents(
+            $file === null
+                ? $this->mainConfigurationFile
+                : $this->configurationLocation . $file . '.json');
 
         return !empty($fileContents) ? json_decode($fileContents, true) : [];
     }

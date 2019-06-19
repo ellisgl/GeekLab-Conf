@@ -13,13 +13,13 @@ final class ArrayConfDriver implements ConfDriverInterface
     /**
      * ArrConfDriver constructor.
      *
-     * @param string $mainConfigurationFile
-     * @param string $configurationLocation
+     * @param string $mainConfFile
+     * @param string $confLocation
      */
-    public function __construct(string $mainConfigurationFile, string $configurationLocation)
+    public function __construct(string $mainConfFile, string $confLocation)
     {
-        $this->mainConfigurationFile = $mainConfigurationFile;
-        $this->configurationLocation = $configurationLocation;
+        $this->mainConfigurationFile = $mainConfFile;
+        $this->configurationLocation = $confLocation;
     }
 
     /**
