@@ -150,7 +150,7 @@ final class GLConf
     /**
      * Handle stings.
      *
-     * @param $data
+     * @param string $data
      * @return string
      */
     private function stringPlaceholderHandler(string $data): string
