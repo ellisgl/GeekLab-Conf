@@ -121,9 +121,8 @@ final class GLConf
             $value
         );
 
-        // Data is an array again...
-        if (is_array($data)) {
-            $data = $this->processConfig($data);
+        if($data === null) {
+            return '';
         }
 
         // Find the recursive self referenced placeholders and fill them.
@@ -149,7 +148,7 @@ final class GLConf
             $data
         );
 
-        return $data;
+        return $data ?? '';
     }
 
     /**
