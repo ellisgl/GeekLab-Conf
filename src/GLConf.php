@@ -118,7 +118,6 @@ final class GLConf
                 // Does this key exist, is so fill this match, if not, just return the match intact.
                 $ret = $this->get($matches[1]) ?: $matches[0];
                 return '' . $ret;
-
             },
             $value
         );
