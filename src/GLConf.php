@@ -148,10 +148,6 @@ final class GLConf
             $data
         );
 
-        if (is_array($data)) {
-            $data = $this->fillPlaceHolders($this->processConfig($data));
-        }
-
         return $data ?? '';
     }
 
