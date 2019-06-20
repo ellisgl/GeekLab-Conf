@@ -104,10 +104,11 @@ final class GLConf
     /**
      * Self referenced and environment variable placeholder replacement.
      *
-     * @param mixed $value
-     * @return mixed
+     * @param string $value
+     *
+     * @return string
      */
-    private function fillPlaceHolders($value)
+    private function fillPlaceHolders(string $value): string
     {
         // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
         // Find the self referenced placeholders and fill them.
@@ -157,7 +158,7 @@ final class GLConf
         if (is_array($data)) {
             // It's an array, so let's loop through it.
             foreach ($data as $k => $val) {
-                if (!is_array($val)) {
+                if (is_string($val)) {
                     $data[$k] = $this->fillPlaceHolders($val);
                 } else {
                     // Recursively replace placeholders.
