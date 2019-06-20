@@ -114,20 +114,18 @@ final class GLConf
         // Find the self referenced placeholders and fill them.
         $data = preg_replace_callback(
             '/@\[([a-zA-Z0-9_.-]*?)]/',
-            function ($matches) {
+            function ($matches) use ($value): string {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
-                return $this->get($matches[1]) ?: $matches[0];
+                $ret = $this->get($matches[1]) ?: $matches[0];
+                return '' . $ret;
+
             },
             $value
         );
 
-        if ($data === null) {
-            return '';
-        }
-
         // Find the recursive self referenced placeholders and fill them.
         if ($data !== $value && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data)) {
-            $data = $this->processConfig($data);
+            $data = '' . $this->processConfig($data);
         }
 
         // Find the environment variable placeholders and fill them.
@@ -142,9 +140,9 @@ final class GLConf
         );
 
         // This is only here because PHPStan is complaining.
-        if ($data !== null && !is_string($data)) {
-            $data = $this->fillPlaceHolders($this->processConfig($data));
-        }
+        //if ($data !== null && !is_string($data)) {
+        //    $data = $this->fillPlaceHolders($this->processConfig($data));
+        //}
 
         return $data ?? '';
     }
