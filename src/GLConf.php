@@ -121,6 +121,11 @@ final class GLConf
             $value
         );
 
+        // Data is now an array.
+        if (is_array($data)) {
+            return $this->processConfig($data);
+        }
+
         // Find the recursive self referenced placeholders and fill them.
         if ($data !== $value && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data)) {
             $data = $this->processConfig($data);
