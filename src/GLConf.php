@@ -140,9 +140,9 @@ final class GLConf
         );
 
         // This is only here because PHPStan is complaining.
-        //if ($data !== null && !is_string($data)) {
-        //    $data = $this->fillPlaceHolders($this->processConfig($data));
-        //}
+        if ($data !== null && !is_string($data)) {
+            $data = $this->fillPlaceHolders($this->processConfig($data));
+        }
 
         return $data ?? '';
     }
