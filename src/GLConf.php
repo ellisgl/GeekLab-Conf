@@ -121,7 +121,7 @@ final class GLConf
             $value
         );
 
-        if($data === null) {
+        if ($data === null) {
             return '';
         }
 
