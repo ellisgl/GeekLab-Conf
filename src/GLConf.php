@@ -134,19 +134,17 @@ final class GLConf
         $data = preg_replace_callback(
             '/\$\[([a-zA-Z0-9_.-]*?)]/',
             static function ($matches) {
-                // If locally set environment variable (variable not set by a SAPI) found, replace with it's value.
-                if (!empty(getenv($matches[1], true))) {
-                    // Try local only environment variables first (variable not set by a SAPI)
-                    $ret = getenv($matches[1], true);
-                } else {
-                    // Don't replace.
-                    $ret = $matches[0];
-                }
-
-                return $ret;
+                // Replace with local variable (non-SAPI)
+                // Or keep intact if one isn't found.
+                return !empty(getenv($matches[1], true)) ? getenv($matches[1], true) : $matches[0];
             },
             $data
         );
+
+        // This is only here because PHPStan is complaining.
+        if (is_array($data)) {
+            $data = $this->fillPlaceHolders($this->processConfig($data));
+        }
 
         return $data ?? '';
     }
