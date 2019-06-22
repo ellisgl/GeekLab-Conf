@@ -114,13 +114,15 @@ final class GLConf
         // Find the self referenced placeholders and fill them.
         $data = preg_replace_callback(
             '/@\[([a-zA-Z0-9_.-]*?)]/',
-            function ($matches) use ($value): string {
+            function ($matches): string {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
-                $ret = $this->get($matches[1]) ?: $matches[0];
-                return '' . $ret;
+                return $this->get($matches[1]) ?: $matches[0];
             },
             $value
         );
+
+        // Force to string. PHPStan is complaining.
+        $data = '' . $data;
 
         // Find the recursive self referenced placeholders and fill them.
         if ($data !== $value && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data)) {
