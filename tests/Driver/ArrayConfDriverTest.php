@@ -8,8 +8,8 @@ class ArrayConfDriverTest extends TestCase
     public function testDriver(): void
     {
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/../_data/Array/';
-        $driver                 = new ArrayConfDriver($configurationDirectory . 'system.php', $configurationDirectory);
+        $confDir = __DIR__ . '/../_data/Array/';
+        $driver                 = new ArrayConfDriver($confDir . 'system.php', $confDir);
 
         $expected = [
             'service' => 'CrazyWebApp',

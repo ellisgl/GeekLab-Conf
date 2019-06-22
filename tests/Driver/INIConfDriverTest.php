@@ -8,8 +8,8 @@ class INIConfDriverTest extends TestCase
     public function testDriver(): void
     {
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/../_data/INI/';
-        $driver                 = new INIConfDriver($configurationDirectory . 'system.ini', $configurationDirectory);
+        $confDir = __DIR__ . '/../_data/INI/';
+        $driver                 = new INIConfDriver($confDir . 'system.ini', $confDir);
 
         $expected = [
             'service' => 'CrazyWebApp',

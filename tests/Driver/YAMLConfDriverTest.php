@@ -8,8 +8,8 @@ class YAMLConfDriverTest extends TestCase
     public function testDriver(): void
     {
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/../_data/YAML/';
-        $driver                 = new YAMLConfDriver($configurationDirectory . 'system.yaml', $configurationDirectory);
+        $confDir = __DIR__ . '/../_data/YAML/';
+        $driver                 = new YAMLConfDriver($confDir . 'system.yaml', $confDir);
 
         $expected = [
             'service' => 'CrazyWebApp',

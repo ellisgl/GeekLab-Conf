@@ -8,8 +8,8 @@ class JSONConfDriverTest extends TestCase
     public function testDriver(): void
     {
         // Where the configurations are.
-        $configurationDirectory = __DIR__ . '/../_data/JSON/';
-        $driver                 = new JSONConfDriver($configurationDirectory . 'system.json', $configurationDirectory);
+        $confDir = __DIR__ . '/../_data/JSON/';
+        $driver                 = new JSONConfDriver($confDir . 'system.json', $confDir);
 
         $expected = [
             'service' => 'CrazyWebApp',
