@@ -9,7 +9,7 @@ Immutable configuration system loader & parser for PHP >= 7.2 that supports mult
 This library is an alternative to '.env' type configuration libraries and uses the [Strategy Pattern](https://designpatternsphp.readthedocs.io/en/latest/Behavioral/Strategy/README.html).
 
 ## Latest
-2.0.2 (2019/5/31): Removed untestable code, which was a potential security risk.
+2.0.4 (2019/06/22): Fixing code complexity, PHPStan complaints and other possible issues.
 
 ## Features:
 * Multi-file configuration loading, no more monolithic configurations!
