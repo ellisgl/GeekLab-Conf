@@ -113,7 +113,7 @@ final class GLConf
         // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
         // Find the self referenced placeholders and fill them.
         // Force type to string, in possible case of null.
-        $data = (string)preg_replace_callback(
+        $data = (string) preg_replace_callback(
             '/@\[([a-zA-Z0-9_.-]*?)]/',
             function ($matches): string {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
@@ -124,12 +124,12 @@ final class GLConf
 
         // Find the recursive self referenced placeholders and fill them.
         if ($data !== $value && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data)) {
-            $data = (string)$this->processConfig($data);
+            $data = (string) $this->processConfig($data);
         }
 
         // Find the environment variable placeholders and fill them.
         // Force type to string, in possible case of null.
-        $data = (string)preg_replace_callback(
+        $data = (string) preg_replace_callback(
             '/\$\[([a-zA-Z0-9_.-]*?)]/',
             static function ($matches) {
                 // Replace with local variable (non-SAPI)
