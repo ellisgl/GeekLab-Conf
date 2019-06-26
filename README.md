@@ -1,8 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![phpstan enabled](https://img.shields.io/badge/phpstan-enabled-green.svg)](https://github.com/phpstan/phpstan)
-[![Build Status](https://travis-ci.com/ellisgl/GeekLab-Conf.svg?branch=master)](https://travis-ci.com/ellisgl/GeekLab-Conf)
-[![Coverage](https://codecov.io/gh/ellisgl/GeekLab-Conf/branch/master/graph/badge.svg)](https://codecov.io/gh/ellisgl/GeekLab-Conf)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/?branch=master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
 # geeklab/conf
 Immutable configuration system loader & parser for PHP >= 7.2 that supports multiple file formats and has some templating features.
