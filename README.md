@@ -1,4 +1,4 @@
-[![License: BSD](https://opensource.org/licenses/BSD-3-Clause)
+[![License: BSD](https://img.shields.io/badge/License-BSD-yellow.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![phpstan enabled](https://img.shields.io/badge/phpstan-enabled-green.svg)](https://github.com/phpstan/phpstan)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/?branch=master)
