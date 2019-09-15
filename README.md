@@ -7,7 +7,7 @@
 Immutable configuration system loader & parser for PHP >= 7.2 that supports multiple file formats and has some templating features.
 This library is an alternative to '.env' type configuration libraries and uses the [Strategy Pattern](https://designpatternsphp.readthedocs.io/en/latest/Behavioral/Strategy/README.html). 
 
-# [https://github.com/ellisgl/php-benchmarks/blob/master/results/Confs.md](Benchmarks)
+# [Benchmarks](https://github.com/ellisgl/php-benchmarks/blob/master/results/Confs.md)
 
 ## Latest
 2.0.4 (2019/06/22): Fixing code complexity, PHPStan complaints and other possible issues.
