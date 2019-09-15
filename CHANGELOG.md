@@ -1,4 +1,4 @@
-2.0.5 (2019/06/19): Just some style fixes.
+2.0.5 (2019/06/22): Just some style fixes.
 
 2.0.4 (2019/06/19): Fixing code complexity all the way.
 
