@@ -115,8 +115,7 @@ final class GLConf
         // Force type to string, in possible case of null.
         $data = (string)preg_replace_callback(
             '/@\[([a-zA-Z0-9_.-]*?)]/',
-            function ($matches): string
-            {
+            function ($matches): string {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
                 return $this->get($matches[1]) ?: $matches[0];
             },
@@ -132,8 +131,7 @@ final class GLConf
         // Force the type to string, in possible case of null.
         return (string)preg_replace_callback(
             '/\$\[([a-zA-Z0-9_.-]*?)]/',
-            static function ($matches)
-            {
+            static function ($matches) {
                 // Replace with local variable (non-SAPI)
                 // Or keep intact if one isn't found.
                 return !empty(getenv($matches[1], true)) ? getenv($matches[1], true) : $matches[0];

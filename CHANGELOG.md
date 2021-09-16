@@ -1,3 +1,5 @@
+2.0.7 (2020-09-16): Style fixing. 
+
 2.0.6 (2020-09-16): PSR-12 style fixes and shorter property names.
 
 2.0.5 (2019-06-22): Just some style fixes.
