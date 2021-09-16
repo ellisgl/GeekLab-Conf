@@ -9,7 +9,7 @@ final class GLConf
     /** @var ConfDriverInterface $driver */
     private $driver;
 
-    /** @var array $configuration The compiled configuration. */
+    /** @var array[] $configuration The compiled configuration. */
     protected $configuration = [];
 
     /**
@@ -26,7 +26,7 @@ final class GLConf
     /**
      * Return the compiled configuration.
      *
-     * @return array
+     * @return array[]
      */
     public function getAll(): array
     {
@@ -49,7 +49,7 @@ final class GLConf
         /** @var mixed $config Save configuration for local scope modification. */
         $config = $this->configuration;
 
-        /** @var bool|array $token Tokenize the key to do iterations over the config with. */
+        /** @var array[] | bool  $token Tokenize the key to do iterations over the config with. */
         $token = strtok($key, '.');
 
         // Loop until we are out of tokens.
@@ -75,9 +75,9 @@ final class GLConf
      * -  Convert key names to uppercase.
      * -  Convert spaces and periods to underscores.
      *
-     * @param array $arr
+     * @param array[] $arr
      *
-     * @return array
+     * @return array[]
      */
     protected function conformArray(array $arr): array
     {

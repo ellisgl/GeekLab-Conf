@@ -1,3 +1,5 @@
+2.1.0 (2020-09-16): Added variable replacements in the constructor, so you can dynamically set stuff.
+
 2.0.7 (2020-09-16): Style fixing. 
 
 2.0.6 (2020-09-16): PSR-12 style fixes and shorter property names.
