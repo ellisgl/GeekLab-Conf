@@ -33,7 +33,7 @@ $configurationDirectory = __DIR__ . '/config/';
 $configuration = new GLConf(
     new JSONConfDriver(
         $configurationDirectory . 'system.json',  // Path and file name of main (top level) configuration.
-        $configurationDirectory                   // Path to the other configuation files. 
+        $configurationDirectory                   // Path to the other configuration files. 
     )
 );
 
@@ -56,6 +56,7 @@ PSR Compliance:
 * PSR-1
 * PSR-2
 * PSR-4
+* PSR-12
 
 ## Todo:
 * More Documentation.

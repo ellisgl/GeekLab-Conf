@@ -4,11 +4,11 @@ namespace GeekLab\Conf\Driver;
 
 final class JSONConfDriver implements ConfDriverInterface
 {
-    /** @var string $mainConfigurationFile Path and file name of the top configuration file. */
-    private $mainConfigurationFile;
+    /** @var string $mainConfFile Path and file name of the top configuration file. */
+    private $mainConfFile;
 
-    /** @var string $configurationLocation Path of the configuration files. */
-    private $configurationLocation;
+    /** @var string $confLocation Path of the configuration files. */
+    private $confLocation;
 
     /**
      * JSONConfDriver constructor.
@@ -18,8 +18,8 @@ final class JSONConfDriver implements ConfDriverInterface
      */
     public function __construct(string $mainConfFile, string $confLocation)
     {
-        $this->mainConfigurationFile = $mainConfFile;
-        $this->configurationLocation = $confLocation;
+        $this->mainConfFile = $mainConfFile;
+        $this->confLocation = $confLocation;
     }
 
     /**
@@ -31,7 +31,7 @@ final class JSONConfDriver implements ConfDriverInterface
      */
     public function parseConfigurationFile(?string $file = null): array
     {
-        $fileName = $file === null ? $this->mainConfigurationFile : $this->configurationLocation . $file . '.json';
+        $fileName = $file === null ? $this->mainConfFile : $this->confLocation . $file . '.json';
         $fileContents = file_get_contents($fileName);
 
         return !empty($fileContents) ? json_decode($fileContents, true) : [];

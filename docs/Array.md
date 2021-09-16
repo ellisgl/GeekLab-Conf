@@ -1,5 +1,5 @@
 ### Usage
-Setup a primary Array file (system.php, main.php, moneky.php or what ever you want to call it).
+Set up a primary Array file (system.php, main.php, moneky.php or what ever you want to call it).
 
 ```php
 <?php

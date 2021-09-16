@@ -15,7 +15,7 @@ interface ConfDriverInterface
     /**
      * Load and parse a configuration file and return an array.
      *
-     * @param string|null $file If null, then load the main configuration file
+     * @param string | null $file If null, then load the main configuration file
      *
      * @return array
      */

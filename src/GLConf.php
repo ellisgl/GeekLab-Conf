@@ -113,9 +113,10 @@ final class GLConf
         // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
         // Find the self referenced placeholders and fill them.
         // Force type to string, in possible case of null.
-        $data = (string) preg_replace_callback(
+        $data = (string)preg_replace_callback(
             '/@\[([a-zA-Z0-9_.-]*?)]/',
-            function ($matches): string {
+            function ($matches): string
+            {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
                 return $this->get($matches[1]) ?: $matches[0];
             },
@@ -124,28 +125,28 @@ final class GLConf
 
         // Find the recursive self referenced placeholders and fill them.
         if ($data !== $value && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data)) {
-            $data = (string) $this->processConfig($data);
+            $data = (string)$this->processConfig($data);
         }
 
         // Find the environment variable placeholders and fill them.
-        // Force type to string, in possible case of null.
-        $data = (string) preg_replace_callback(
+        // Force the type to string, in possible case of null.
+        return (string)preg_replace_callback(
             '/\$\[([a-zA-Z0-9_.-]*?)]/',
-            static function ($matches) {
+            static function ($matches)
+            {
                 // Replace with local variable (non-SAPI)
                 // Or keep intact if one isn't found.
                 return !empty(getenv($matches[1], true)) ? getenv($matches[1], true) : $matches[0];
             },
             $data
         );
-
-        return $data;
     }
 
     /**
      * Run through the configuration and process the placeholders.
      *
      * @param mixed $data
+     *
      * @return mixed
      */
     private function processConfig($data)
