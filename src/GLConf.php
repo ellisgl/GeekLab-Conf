@@ -24,16 +24,6 @@ final class GLConf
     }
 
     /**
-     * Return the compiled configuration.
-     *
-     * @return array
-     */
-    public function getAll(): array
-    {
-        return $this->configuration;
-    }
-
-    /**
      * Get data by dot notation.
      * Stolen from: https://stackoverflow.com/a/14706302/344028
      *
@@ -68,6 +58,56 @@ final class GLConf
 
         // Return the valid found by the previous loop.
         return $config;
+    }
+
+    /**
+     * Return the compiled configuration.
+     *
+     * @return array
+     */
+    public function getAll(): array
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * Initialize the configuration system.
+     */
+    public function init(): void
+    {
+        // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys).
+        $this->configuration = $this->driver->parseConfigurationFile();
+        $this->configuration = $this->conformArray($this->configuration);
+        $config = [];
+
+        // Load in the extra configuration via the CONF property.
+        if (isset($this->configuration['CONF']) && is_array($this->configuration['CONF'])) {
+            foreach ($this->configuration['CONF'] as $file) {
+                // Load in the referenced configuration from the main configuration.
+                $innerConfig = $this->driver->parseConfigurationFile($file);
+
+                // Conform the configuration array.
+                $innerConfig = $this->conformArray($innerConfig);
+
+                // Strip out anything that wasn't in a section (non-array value at the top level).
+                // We don't want the ability to overwrite stuff from main configuration file.
+                foreach ($innerConfig as $k => $v) {
+                    if (!is_array($v)) {
+                        unset($innerConfig[$k]);
+                    }
+                }
+
+                // Store conformed configuration into temporary array for merging later.
+                $config[] = $innerConfig;
+            }
+
+            // Combine/Merge/Overwrite compiled configuration with current.
+            // Uses the splat operator on the arrays stored in the temporary config.
+            $this->configuration = array_replace_recursive($this->configuration, ...$config) ?? [];
+        }
+
+        // Fill in the placeholders.
+        $this->configuration = $this->processConfig($this->configuration);
     }
 
     /**
@@ -112,7 +152,7 @@ final class GLConf
     {
         // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
         // Find the self referenced placeholders and fill them.
-        // Force type to string, in possible case of null.
+        // Force the type to string, in possible case of null.
         $data = (string) preg_replace_callback(
             '/@\[([a-zA-Z0-9_.-]*?)]/',
             function ($matches): string {
@@ -159,45 +199,5 @@ final class GLConf
         }
 
         return $data;
-    }
-
-    /**
-     * Initialize the configuration system.
-     */
-    public function init(): void
-    {
-        // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys).
-        $this->configuration = $this->driver->parseConfigurationFile();
-        $this->configuration = $this->conformArray($this->configuration);
-        $config = [];
-
-        // Load in the extra configuration via the CONF property.
-        if (isset($this->configuration['CONF']) && is_array($this->configuration['CONF'])) {
-            foreach ($this->configuration['CONF'] as $file) {
-                // Load in the referenced configuration from the main configuration.
-                $innerConfig = $this->driver->parseConfigurationFile($file);
-
-                // Conform the configuration array.
-                $innerConfig = $this->conformArray($innerConfig);
-
-                // Strip out anything that wasn't in a section (non-array value at the top level).
-                // We don't want the ability to overwrite stuff from main configuration file.
-                foreach ($innerConfig as $k => $v) {
-                    if (!is_array($v)) {
-                        unset($innerConfig[$k]);
-                    }
-                }
-
-                // Store conformed configuration into temporary array for merging later.
-                $config[] = $innerConfig;
-            }
-
-            // Combine/Merge/Overwrite compiled configuration with current.
-            // Uses the splat operator on the arrays stored in the temporary config.
-            $this->configuration = array_replace_recursive($this->configuration, ...$config) ?? [];
-        }
-
-        // Fill in the placeholders.
-        $this->configuration = $this->processConfig($this->configuration);
     }
 }
