@@ -7,10 +7,10 @@ use GeekLab\Conf\Driver\ConfDriverInterface;
 final class GLConf
 {
     /** @var ConfDriverInterface $driver */
-    private $driver;
+    private ConfDriverInterface $driver;
 
     /** @var array[] $configuration The compiled configuration. */
-    protected $configuration = [];
+    protected array $configuration = [];
 
     /**
      * GLConf constructor.

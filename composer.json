@@ -10,11 +10,13 @@
         }
     ],
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "symfony/yaml": "^5.3"
     },
-    "autoload"          : {
-        "psr-4" : {
-            "GeekLab\\Conf\\" : "src"
+    "autoload": {
+        "psr-4": {
+            "GeekLab\\Conf\\": "src",
+            "Tests\\Unit\\": "tests/Unit"
         }
     },
     "require-dev": {
@@ -26,7 +28,7 @@
     "scripts": {
         "test": "phpunit",
         "phpstan": "phpstan analyse src --level=7",
-        "phpcs" : "phpcs src/ --standard=PSR12 -n",
+        "phpcs": "phpcs src/ --standard=PSR12 -n",
         "phpmd": "phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode"
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Unit\Driver;
+
 use GeekLab\Conf\Driver\YAMLConfDriver;
 use PHPUnit\Framework\TestCase;
 
@@ -8,7 +10,7 @@ class YAMLConfDriverTest extends TestCase
     public function testDriver(): void
     {
         // Where the configurations are.
-        $confDir = __DIR__ . '/../_data/YAML/';
+        $confDir = __DIR__ . '/../../_data/YAML/';
         $driver                 = new YAMLConfDriver($confDir . 'system.yaml', $confDir);
 
         $expected = [

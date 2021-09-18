@@ -5,10 +5,10 @@ namespace GeekLab\Conf\Driver;
 final class INIConfDriver implements ConfDriverInterface
 {
     /** @var string $mainConfFile Path and file name of the top configuration file. */
-    private $mainConfFile;
+    private string $mainConfFile;
 
     /** @var string $confLocation Path of the configuration files. */
-    private $confLocation;
+    private string $confLocation;
 
     /**
      * INIConfDriver constructor.

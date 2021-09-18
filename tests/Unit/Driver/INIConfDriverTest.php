@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Unit\Driver;
+
 use GeekLab\Conf\Driver\INIConfDriver;
 use PHPUnit\Framework\TestCase;
 
@@ -8,7 +10,7 @@ class INIConfDriverTest extends TestCase
     public function testDriver(): void
     {
         // Where the configurations are.
-        $confDir = __DIR__ . '/../_data/INI/';
+        $confDir = __DIR__ . '/../../_data/INI/';
         $driver                 = new INIConfDriver($confDir . 'system.ini', $confDir);
 
         $expected = [

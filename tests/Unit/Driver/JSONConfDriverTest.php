@@ -1,15 +1,17 @@
 <?php
 
-use GeekLab\Conf\Driver\ArrayConfDriver;
+namespace Tests\Unit\Driver;
+
+use GeekLab\Conf\Driver\JSONConfDriver;
 use PHPUnit\Framework\TestCase;
 
-class ArrayConfDriverTest extends TestCase
+class JSONConfDriverTest extends TestCase
 {
     public function testDriver(): void
     {
         // Where the configurations are.
-        $confDir = __DIR__ . '/../_data/Array/';
-        $driver                 = new ArrayConfDriver($confDir . 'system.php', $confDir);
+        $confDir = __DIR__ . '/../../_data/JSON/';
+        $driver                 = new JSONConfDriver($confDir . 'system.json', $confDir);
 
         $expected = [
             'service' => 'CrazyWebApp',
