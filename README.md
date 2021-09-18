@@ -10,7 +10,7 @@ This library is an alternative to '.env' type configuration libraries and uses t
 ### [Benchmarks](https://github.com/ellisgl/php-benchmarks/blob/master/results/Confs.md)
 
 ## Latest
-3.0.0 (2020-09-18): Updated to be >= 7.4.0 compatible. Removed the need for the YAML PHP extension.
+3.1.0 (2020-09-18): Injectable values.
 
 ## Features:
 * Multi-file configuration loading, no more monolithic configurations!
