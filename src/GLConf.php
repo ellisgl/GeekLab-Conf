@@ -49,7 +49,7 @@ final class GLConf
         /** @var mixed $config Save configuration for local scope modification. */
         $config = $this->configuration;
 
-        /** @var array[] | bool  $token Tokenize the key to do iterations over the config with. */
+        /** @var array[] | bool $token Tokenize the key to do iterations over the config with. */
         $token = strtok($key, '.');
 
         // Loop until we are out of tokens.
@@ -113,7 +113,7 @@ final class GLConf
         // Certain recursive stuff, like @[SelfReferencedPlaceholder.@[SomeStuff.a]] is what triggers this part.
         // Find the self referenced placeholders and fill them.
         // Force type to string, in possible case of null.
-        $data = (string)preg_replace_callback(
+        $data = (string) preg_replace_callback(
             '/@\[([a-zA-Z0-9_.-]*?)]/',
             function ($matches): string {
                 // Does this key exist, is so fill this match, if not, just return the match intact.
@@ -124,12 +124,12 @@ final class GLConf
 
         // Find the recursive self referenced placeholders and fill them.
         if ($data !== $value && preg_match('/@\[([a-zA-Z0-9_.-]*?)]/', $data)) {
-            $data = (string)$this->processConfig($data);
+            $data = (string) $this->processConfig($data);
         }
 
         // Find the environment variable placeholders and fill them.
         // Force the type to string, in possible case of null.
-        return (string)preg_replace_callback(
+        return (string) preg_replace_callback(
             '/\$\[([a-zA-Z0-9_.-]*?)]/',
             static function ($matches) {
                 // Replace with local variable (non-SAPI)
