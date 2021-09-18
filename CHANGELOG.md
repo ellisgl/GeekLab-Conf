@@ -1,4 +1,4 @@
-3.0.0 (2020-09-18): More package upgrades to get to PHP 8.x compatible. This will require 7.4.x probably.
+3.0.0 (2020-09-18): Updated to be >= 7.4.0 compatible. Removed the need for the YAML PHP extension.
 
 2.0.7 (2020-09-16): Style fixing. 
 
