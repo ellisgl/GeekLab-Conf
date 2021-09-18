@@ -3,32 +3,19 @@
 namespace Tests\Unit\Driver;
 
 use GeekLab\Conf\Driver\YAMLConfDriver;
-use PHPUnit\Framework\TestCase;
 
-class YAMLConfDriverTest extends TestCase
+class YAMLConfDriverTest extends BaseDriverTestCase
 {
     public function testDriver(): void
     {
         // Where the configurations are.
         $confDir = __DIR__ . '/../../_data/YAML/';
-        $driver                 = new YAMLConfDriver($confDir . 'system.yaml', $confDir);
-
-        $expected = [
-            'service' => 'CrazyWebApp',
-            'env'     => 'dev',
-            'conf'    =>
-                [
-                    'webapp',
-                    'dev',
-                    'ellisgl'
-                ]
-        ];
-
-        $this->assertSame($expected, $driver->parseConfigurationFile());
+        $driver = new YAMLConfDriver($confDir . 'system.yaml', $confDir);
+        $this->assertSame($this->expected, $driver->parseConfigurationFile());
 
         $expected = [
             'outofsection' => 456,
-            'database' =>
+            'database'     =>
                 [
                     'dsn'  => 'mysql:host=@[database.host];dbname=@[database.db]',
                     'host' => 'localhost',
@@ -36,7 +23,7 @@ class YAMLConfDriverTest extends TestCase
                     'pass' => 'devpass',
                     'db'   => 'GeekLab'
                 ],
-            'devstuff' =>
+            'devstuff'     =>
                 [
                     'x' => 'something'
                 ]

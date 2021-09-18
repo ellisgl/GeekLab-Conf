@@ -19,7 +19,7 @@ class GLConfTest extends TestCase
         // Basic get.
         $this->assertEquals('CrazyWebApp', $conf->get('SERVICE'), 'GLConf::get "Basic" failed!');
 
-        // Make sure it case doesn't matter.
+        // Make sure it's case doesn't matter.
         $this->assertEquals('CrazyWebApp', $conf->get('SeRvIcE'), 'GLConf::get case change failed!');
 
         // Test dot notation.
@@ -166,5 +166,4 @@ class GLConfTest extends TestCase
 
         $this->runRepeatableTests($conf);
     }
-
 }
