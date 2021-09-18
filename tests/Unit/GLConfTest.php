@@ -128,7 +128,6 @@ class GLConfTest extends TestCase
         // Where the configurations are.
         $confDir = __DIR__ . '/../_data/Array/';
         $conf = new GLConf(new ArrayConfDriver($confDir . 'system.php', $confDir));
-
         $conf->init();
 
         $this->runRepeatableTests($conf);
@@ -139,10 +138,25 @@ class GLConfTest extends TestCase
         // Where the configurations are.
         $confDir = __DIR__ . '/../_data/INI/';
         $conf = new GLConf(new INIConfDriver($confDir . 'system.ini', $confDir));
-
         $conf->init();
 
         $this->runRepeatableTests($conf);
+    }
+
+    public function testInjectedValues(): void
+    {
+        $confDir = __DIR__ . '/../_data/Array/';
+        $conf = new GLConf(
+            new ArrayConfDriver($confDir . 'system.php', $confDir),
+            ['doesnotexist' => '127.0.0.1']
+        );
+        $conf->init();
+
+        $this->assertEquals(
+            '127.0.0.1',
+            $conf->get('somestuff.d'),
+            'GLConf::init replaced a non existing recursive self reference.'
+        );
     }
 
     public function testJSONConfiguration(): void
@@ -150,7 +164,6 @@ class GLConfTest extends TestCase
         // Where the configurations are.
         $confDir = __DIR__ . '/../_data/JSON/';
         $conf = new GLConf(new JSONConfDriver($confDir . 'system.json', $confDir));
-
         $conf->init();
 
         $this->runRepeatableTests($conf);
@@ -161,7 +174,6 @@ class GLConfTest extends TestCase
         // Where the configurations are.
         $confDir = __DIR__ . '/../_data/YAML/';
         $conf = new GLConf(new YAMLConfDriver($confDir . 'system.yaml', $confDir));
-
         $conf->init();
 
         $this->runRepeatableTests($conf);

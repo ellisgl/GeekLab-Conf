@@ -6,21 +6,26 @@ use GeekLab\Conf\Driver\ConfDriverInterface;
 
 final class GLConf
 {
+    /** @var array $configuration The compiled configuration. */
+    protected array $configuration = [];
+
     /** @var ConfDriverInterface $driver */
     private ConfDriverInterface $driver;
 
-    /** @var array $configuration The compiled configuration. */
-    protected array $configuration = [];
+    /** @var array $injectedValues */
+    private array $injectedValues;
 
     /**
      * GLConf constructor.
      * Inject our driver (strategy) here.
      *
      * @param ConfDriverInterface $driver
+     * @param array $valueInjections
      */
-    public function __construct(ConfDriverInterface $driver)
+    public function __construct(ConfDriverInterface $driver, array $valueInjections = [])
     {
         $this->driver = $driver;
+        $this->injectedValues = $valueInjections;
     }
 
     /**
@@ -75,8 +80,13 @@ final class GLConf
      */
     public function init(): void
     {
-        // Load main (top level) configuration and conform it (uppercase and changes spaces to underscores in keys).
+        // Load main (top level) configuration.
         $this->configuration = $this->driver->parseConfigurationFile();
+
+        // Overload configuration with injected values.
+        $this->configuration = array_merge($this->configuration, $this->injectedValues);
+
+        // Conform the array (uppercase and changes spaces to underscore characters in keys).
         $this->configuration = $this->conformArray($this->configuration);
         $config = [];
 
