@@ -1,4 +1,4 @@
-2.1.0 (2020-09-16): Added variable replacements in the constructor, so you can dynamically set stuff.
+3.0.0 (2020-09-18): More package upgrades to get to PHP 8.x compatible. This will require 7.4.x probably.
 
 2.0.7 (2020-09-16): Style fixing. 
 
