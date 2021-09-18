@@ -33,10 +33,6 @@ final class YAMLConfDriver implements ConfDriverInterface
      */
     public function parseConfigurationFile(?string $file = null): array
     {
-        if ($file === null) {
-            return Yaml::parseFile($this->mainConfFile);
-        }
-
-        return Yaml::parseFile($this->confLocation . $file . '.yaml');
+        return (array) Yaml::parseFile($file === null ? $this->mainConfFile : $this->confLocation . $file . '.yaml');
     }
 }
