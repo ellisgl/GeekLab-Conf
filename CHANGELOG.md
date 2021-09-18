@@ -1,3 +1,5 @@
+3.1.0 (2020-09-18): Injectable values.
+
 3.0.0 (2020-09-18): Updated to be >= 7.4.0 compatible. Removed the need for the YAML PHP extension.
 
 2.0.7 (2020-09-16): Style fixing. 
