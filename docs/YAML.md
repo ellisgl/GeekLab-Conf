@@ -2,7 +2,7 @@
 The PHP YAML extension.
 
 ### Usage
-Setup a primary YAML (system.yaml, main.yaml, moneky.yaml or what ever you want to call it).
+Set up a primary YAML (system.yaml, main.yaml, monkey.yaml or what ever you want to call it).
 
 ```yml
 service: CrazyWebApp
@@ -15,7 +15,7 @@ conf:
 
 The important key is `conf`, this tells the loader which YAML files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary YAMLs (E.g. webapp.yaml, dev.yaml, elllisgl.yaml, etc...). See [/tests/_data/YAML](/tests/_data/YAML) for examples.
+Set up your secondary YAMLs (E.g. webapp.yaml, dev.yaml, elllisgl.yaml, etc...). See [/tests/_data/YAML](/tests/_data/YAML) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
@@ -53,4 +53,4 @@ define('IS_DEV', ($conf->get('ENV') === 'dev') ? true : false);
 $db = new PDO($conf->get('database.dsn'), $conf->get('database.user'), $conf->get('database.pass'));
 ```
 
-So for `$conf->get()`, it uses dot notation to access the data, and everything is case insensitive. Also there is a `getAll()` method, which will return an array of the compiled config.
+So for `$conf->get()`, it uses dot notation to access the data, and everything is case-insensitive. Also, there is a `getAll()` method, which will return an array of the compiled config.

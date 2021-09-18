@@ -1,5 +1,5 @@
 ### Usage
-Setup a primary INI (system.ini, main.ini, moneky.ini or what ever you want to call it).
+Set up a primary INI (system.ini, main.ini, monkey.ini or what ever you want to call it).
 
 ```ini
 service = CrazyWebApp
@@ -11,7 +11,7 @@ conf[] = ellisgl
 
 This base file does not have any sections (but it could). The important property is `conf[]`, this tells the loader which INI files to load up, and this is put in order, since we are merging/combining/replacing stuff from the previous imports.
 
-Setup your secondary INIs (E.g. webapp.ini, dev.ini, elllisgl.ini, etc...). See [/tests/_data/INI](/tests/_data/INI) for examples.
+Set up your secondary INIs (E.g. webapp.ini, dev.ini, elllisgl.ini, etc...). See [/tests/_data/INI](/tests/_data/INI) for examples.
 
 _note_: While you can use spaces and periods in sections / properties, just remember that spaces and periods will be transformed into underscores `_`.
 
@@ -48,4 +48,4 @@ $conf->init();
 define('IS_DEV', ($conf->get('ENV') === 'dev') ? true : false);
 $db = new PDO($conf->get('database.dsn'), $conf->get('database.user'), $conf->get('database.pass'));
 ```
-So for `$conf->get()`, it uses dot notation to access the data, and everything is case insensitive. Also there is a `getAll()` method, which will return an array of the compiled config.
+So for `$conf->get()`, it uses dot notation to access the data, and everything is case-insensitive. Also, there is a `getAll()` method, which will return an array of the compiled config.

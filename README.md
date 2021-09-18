@@ -19,6 +19,7 @@ This library is an alternative to '.env' type configuration libraries and uses t
 * Environment variable placeholders. $[ENVIRONMENT_VARIABLE_NAME] (PHP likes "${YOUR_TEXT_HERE}" a little too much...)
 * Can use INI, JSON, YAML and Array files.
 * Immutability, since you shouldn't change your configuration during run time.
+* Can inject values, to make things really dynamic.
 
 ## Installation:
 composer require geeklab/conf
@@ -34,7 +35,8 @@ $configuration = new GLConf(
     new JSONConfDriver(
         $configurationDirectory . 'system.json',  // Path and file name of main (top level) configuration.
         $configurationDirectory                   // Path to the other configuration files. 
-    )
+    ),
+    ['mySecretKey' => md5(rand())]                // Value injections.
 );
 
 $configuration->init();
@@ -60,5 +62,5 @@ PSR Compliance:
 
 ## Todo:
 * More Documentation.
-* Benchmarks.
+* Include .env?
 
