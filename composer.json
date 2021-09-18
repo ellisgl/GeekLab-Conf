@@ -27,7 +27,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "phpstan": "phpstan analyse src --level=7",
+        "phpstan": "phpstan analyse -c phpstan.neon",
         "phpcs": "phpcs src/ --standard=PSR12 -n",
         "phpmd": "phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode"
     }
