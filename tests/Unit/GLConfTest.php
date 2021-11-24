@@ -169,6 +169,43 @@ class GLConfTest extends TestCase
         $this->runRepeatableTests($conf);
     }
 
+    public function testKeyLowerCaseOption(): void
+    {
+        // Where the configurations are.
+        $confDir = __DIR__ . '/../_data/Array/';
+        $conf = new GLConf(new ArrayConfDriver($confDir . 'system.php', $confDir), [], ['keys_lower_case']);
+        $conf->init();
+
+        $dbConf = $conf->get('DATABASE');
+        $this->assertArrayHasKey('host', $dbConf);
+        $this->assertArrayNotHasKey('HOST', $dbConf);
+    }
+
+    public function testKeySameCaseOption(): void
+    {
+        // Where the configurations are.
+        $confDir = __DIR__ . '/../_data/Array/';
+        $conf = new GLConf(new ArrayConfDriver($confDir . 'system.php', $confDir), [], ['keys_same_case']);
+        $conf->init();
+        $someConf = $conf->get('space_Pants');
+        $this->assertArrayHasKey('look_at_my', $someConf);
+        $this->assertArrayNotHasKey('LOOK_AT_MY', $someConf);
+
+        $this->assertFalse($conf->get('space_pants'));
+    }
+
+    public function testKeyUpperCaseOption(): void
+    {
+        // Where the configurations are.
+        $confDir = __DIR__ . '/../_data/Array/';
+        $conf = new GLConf(new ArrayConfDriver($confDir . 'system.php', $confDir), [], ['keys_upper_case']);
+        $conf->init();
+
+        $dbConf = $conf->get('database');
+        $this->assertArrayHasKey('HOST', $dbConf);
+        $this->assertArrayNotHasKey('host', $dbConf);
+    }
+
     public function testYAMLConfiguration(): void
     {
         // Where the configurations are.

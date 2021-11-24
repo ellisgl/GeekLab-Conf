@@ -6,26 +6,28 @@ use GeekLab\Conf\Driver\ConfDriverInterface;
 
 final class GLConf
 {
-    /** @var array $configuration The compiled configuration. */
     protected array $configuration = [];
-
-    /** @var ConfDriverInterface $driver */
     private ConfDriverInterface $driver;
-
-    /** @var array $injectedValues */
     private array $injectedValues;
+    private array $options;
+    private string $confKey;
 
     /**
      * GLConf constructor.
      * Inject our driver (strategy) here.
      *
      * @param ConfDriverInterface $driver
-     * @param array $valueInjections
+     * @param array               $valueInjections
+     * @param array               $options
      */
-    public function __construct(ConfDriverInterface $driver, array $valueInjections = [])
-    {
+    public function __construct(
+        ConfDriverInterface $driver,
+        array $valueInjections = [],
+        array $options = ['keys_upper_case']
+    ) {
         $this->driver = $driver;
         $this->injectedValues = $valueInjections;
+        $this->options = $options;
     }
 
     /**
@@ -38,8 +40,13 @@ final class GLConf
      */
     public function get(string $key)
     {
-        /** @var string $key Convert key to upper case. */
-        $key = strtoupper($key);
+        if (in_array('keys_lower_case', $this->options, true)) {
+            // Convert key to lower case.
+            $key = strtolower($key);
+        } elseif (!in_array('keys_same_case', $this->options, true)) {
+            // Convert key to upper case.
+            $key = strtoupper($key);
+        }
 
         /** @var mixed $config Save configuration for local scope modification. */
         $config = $this->configuration;
@@ -80,19 +87,24 @@ final class GLConf
      */
     public function init(): void
     {
+        $this->confKey = 'conf';
+        if (in_array('keys_upper_case', $this->options, true)) {
+            $this->confKey = 'CONF';
+        }
+
         // Load main (top level) configuration.
         $this->configuration = $this->driver->parseConfigurationFile();
 
         // Overload configuration with injected values.
         $this->configuration = array_merge($this->configuration, $this->injectedValues);
 
-        // Conform the array (uppercase and changes spaces to underscore characters in keys).
+        // Conform the array (cases and changes spaces to underscore characters in keys).
         $this->configuration = $this->conformArray($this->configuration);
         $config = [];
 
         // Load in the extra configuration via the CONF property.
-        if (isset($this->configuration['CONF']) && is_array($this->configuration['CONF'])) {
-            foreach ($this->configuration['CONF'] as $file) {
+        if (isset($this->configuration[$this->confKey]) && is_array($this->configuration[$this->confKey])) {
+            foreach ($this->configuration[$this->confKey] as $file) {
                 // Load in the referenced configuration from the main configuration.
                 $innerConfig = $this->driver->parseConfigurationFile($file);
 
@@ -122,7 +134,7 @@ final class GLConf
 
     /**
      * Make the array conform to some sort of standard.
-     * -  Convert key names to uppercase.
+     * -  Convert key names cases (maybe).
      * -  Convert spaces and periods to underscores.
      *
      * @param array $arr
@@ -134,8 +146,13 @@ final class GLConf
         // Store our conformed array for returning.
         $fixed = [];
 
-        // Convert keys to uppercase.
-        $arr = array_change_key_case($arr, CASE_UPPER);
+        if (in_array('keys_lower_case', $this->options, true)) {
+            // Convert keys to lower case.
+            $arr = array_change_key_case($arr, CASE_LOWER);
+        } elseif (!in_array('keys_same_case', $this->options, true)) {
+            // Convert keys to upper case.
+            $arr = array_change_key_case($arr, CASE_UPPER);
+        }
 
         foreach ($arr as $k => $v) {
             // Recursively conform the inner arrays.
