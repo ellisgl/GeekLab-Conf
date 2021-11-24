@@ -36,7 +36,10 @@ $configuration = new GLConf(
         $configurationDirectory . 'system.json',  // Path and file name of main (top level) configuration.
         $configurationDirectory                   // Path to the other configuration files. 
     ),
-    ['mySecretKey' => md5(rand())]                // Value injections.
+    ['mySecretKey' => md5(rand())],                // Value injections.
+    ['keys_to_lower']                              // Options:
+                                                   //  Options to change the case of the key if returning a keyed array:    
+                                                   //  keys_upper_case, keys_lower_case, keys_same_case
 );
 
 $configuration->init();
