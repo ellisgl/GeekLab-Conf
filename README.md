@@ -4,7 +4,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/coverage.png?b=release)](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/?branch=release)
 
 # geeklab/conf
-Immutable configuration system loader & parser for PHP >= 7.4 that supports multiple file formats and has some templating features.
+Immutable configuration system loader & parser for PHP >= 8.1 that supports multiple file formats and has some templating features.
 This library is an alternative to '.env' type configuration libraries and uses the [Strategy Pattern](https://designpatternsphp.readthedocs.io/en/latest/Behavioral/Strategy/README.html). 
 
 ### [Benchmarks](https://github.com/ellisgl/php-benchmarks/blob/master/results/Confs.md)
