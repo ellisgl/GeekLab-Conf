@@ -16,7 +16,7 @@ This library is an alternative to '.env' type configuration libraries and uses t
 * Multi-file configuration loading, no more monolithic configurations!
 * Self referencing placeholders. @[X.Y.Z]
 * Recursive self referencing placeholders. @[@[X.Y.Z].SOME_KEY]
-* Environment variable placeholders. $[ENVIRONMENT_VARIABLE_NAME] (PHP likes "${YOUR_TEXT_HERE}" a little too much...)
+* Environment variable placeholders. \$[ENVIRONMENT_VARIABLE_NAME] (PHP likes "\${YOUR_TEXT_HERE}" a little too much...)
 * Can use INI, JSON, YAML and Array files.
 * Immutability, since you shouldn't change your configuration during run time.
 * Can inject values, to make things really dynamic.
