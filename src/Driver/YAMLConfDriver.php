@@ -2,15 +2,12 @@
 
 namespace GeekLab\Conf\Driver;
 
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Parser;
 
 final class YAMLConfDriver implements ConfDriverInterface
 {
-    /** @var string $mainConfFile Path and file name of the top configuration file. */
-    private string $mainConfFile;
-
-    /** @var string $confLocation Path of the configuration files. */
-    private string $confLocation;
+    private string $mainConfFile; // Path and file name of the top configuration file.
+    private string $confLocation; // Path of the configuration files.
 
     /**
      * YAMLConfDriver constructor.
@@ -33,6 +30,10 @@ final class YAMLConfDriver implements ConfDriverInterface
      */
     public function parseConfigurationFile(?string $file = null): array
     {
-        return (array) Yaml::parseFile($file === null ? $this->mainConfFile : $this->confLocation . $file . '.yaml');
+        return (array)(new Parser())->parseFile(
+            $file === null
+                ? $this->mainConfFile
+                : $this->confLocation . $file . '.yaml'
+        );
     }
 }

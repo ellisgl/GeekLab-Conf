@@ -10,7 +10,6 @@ final class GLConf
     private ConfDriverInterface $driver;
     private array $injectedValues;
     private array $options;
-    private string $confKey;
 
     /**
      * GLConf constructor.
@@ -38,7 +37,7 @@ final class GLConf
      *
      * @return mixed
      */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         if (in_array('keys_lower_case', $this->options, true)) {
             // Convert key to lower case.
@@ -87,9 +86,9 @@ final class GLConf
      */
     public function init(): void
     {
-        $this->confKey = 'conf';
+        $confKey = 'conf';
         if (in_array('keys_upper_case', $this->options, true)) {
-            $this->confKey = 'CONF';
+            $confKey = 'CONF';
         }
 
         // Load main (top level) configuration.
@@ -103,8 +102,8 @@ final class GLConf
         $config = [];
 
         // Load in the extra configuration via the CONF property.
-        if (isset($this->configuration[$this->confKey]) && is_array($this->configuration[$this->confKey])) {
-            foreach ($this->configuration[$this->confKey] as $file) {
+        if (isset($this->configuration[$confKey]) && is_array($this->configuration[$confKey])) {
+            foreach ($this->configuration[$confKey] as $file) {
                 // Load in the referenced configuration from the main configuration.
                 $innerConfig = $this->driver->parseConfigurationFile($file);
 
@@ -125,7 +124,7 @@ final class GLConf
 
             // Combine/Merge/Overwrite compiled configuration with current.
             // Uses the splat operator on the arrays stored in the temporary config.
-            $this->configuration = array_replace_recursive($this->configuration, ...$config) ?? [];
+            $this->configuration = array_replace_recursive($this->configuration, ...$config) ?: [];
         }
 
         // Fill in the placeholders.
@@ -148,7 +147,7 @@ final class GLConf
 
         if (in_array('keys_lower_case', $this->options, true)) {
             // Convert keys to lower case.
-            $arr = array_change_key_case($arr, CASE_LOWER);
+            $arr = array_change_key_case($arr);
         } elseif (!in_array('keys_same_case', $this->options, true)) {
             // Convert keys to upper case.
             $arr = array_change_key_case($arr, CASE_UPPER);

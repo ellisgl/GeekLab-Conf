@@ -10,7 +10,7 @@ This library is an alternative to '.env' type configuration libraries and uses t
 ### [Benchmarks](https://github.com/ellisgl/php-benchmarks/blob/master/results/Confs.md)
 
 ## Latest
-3.1.0 (2020-09-18): Injectable values.
+4.0.0 (2020-11-24): Updating to more >= 8.1.0 compatible.
 
 ## Features:
 * Multi-file configuration loading, no more monolithic configurations!

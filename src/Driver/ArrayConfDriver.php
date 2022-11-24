@@ -4,11 +4,8 @@ namespace GeekLab\Conf\Driver;
 
 final class ArrayConfDriver implements ConfDriverInterface
 {
-    /** @var string $mainConfFile Path and file name of the top configuration file. */
-    private string $mainConfFile;
-
-    /** @var string $confLocation Path of the configuration files. */
-    private string $confLocation;
+    private string $mainConfFile; // Path and file name of the top configuration file.
+    private string $confLocation; // Path of the configuration files.
 
     /**
      * ArrConfDriver constructor.
