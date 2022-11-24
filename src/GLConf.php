@@ -214,12 +214,12 @@ final class GLConf
      *
      * @return mixed
      */
-    private function processConfig($data)
+    private function processConfig(mixed $data): mixed
     {
         if (is_array($data)) {
             // It's an array, so let's loop through it.
             foreach ($data as $k => $val) {
-                $data[$k] = is_string($val) ? $this->fillPlaceHolders($val) : $data[$k] = $this->processConfig($val);
+                $data[$k] = is_string($val) ? $this->fillPlaceHolders($val) : $this->processConfig($val);
             }
         } elseif (is_string($data)) {
             $data = $this->fillPlaceHolders($data);
