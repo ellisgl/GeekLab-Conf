@@ -5,7 +5,7 @@
 [![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 # geeklab/conf
-Immutable configuration system loader & parser for PHP >= 8.1 that supports multiple file formats and has some templating features.
+Immutable configuration system loader & parser for PHP >= 8.3 that supports multiple file formats and has some templating features.
 This library is an alternative to '.env' type configuration libraries and uses the [Strategy Pattern](https://designpatternsphp.readthedocs.io/en/latest/Behavioral/Strategy/README.html). 
 
 ### [Benchmarks](https://github.com/ellisgl/php-benchmarks/blob/master/results/Confs.md)
