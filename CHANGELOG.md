@@ -1,3 +1,5 @@
+4.0.1 (2026-11-25): Added GitHub Actions CI (PHPUnit on PHP 8.1-8.5, PHPStan level 8, PSR-12), upgraded PHPStan to 2.x with full array value types, and corrected the composer.json license to BSD-3-Clause to match LICENSE.BSD.
+
 4.0.0 (2022-11-24): Updated to be more inline with >= 8.1.0 compatability.
 
 3.1.0 (2020-09-18): Injectable values.
