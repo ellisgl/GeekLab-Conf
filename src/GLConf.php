@@ -6,9 +6,12 @@ use GeekLab\Conf\Driver\ConfDriverInterface;
 
 final class GLConf
 {
+    /** @var array<mixed> */
     protected array $configuration = [];
     private ConfDriverInterface $driver;
+    /** @var array<mixed> */
     private array $injectedValues;
+    /** @var array<string> */
     private array $options;
 
     /**
@@ -16,8 +19,8 @@ final class GLConf
      * Inject our driver (strategy) here.
      *
      * @param ConfDriverInterface $driver
-     * @param array               $valueInjections
-     * @param array               $options
+     * @param array<mixed>        $valueInjections
+     * @param array<string>       $options
      */
     public function __construct(
         ConfDriverInterface $driver,
@@ -47,10 +50,10 @@ final class GLConf
             $key = strtoupper($key);
         }
 
-        /** @var mixed $config Save configuration for local scope modification. */
+        // Save configuration for local scope modification.
         $config = $this->configuration;
 
-        /** @var array<string> | bool $token Tokenize the key to do iterations over the config with. */
+        // Tokenize the key to do iterations over the config with.
         $token = strtok($key, '.');
 
         // Loop until we are out of tokens.
@@ -74,7 +77,7 @@ final class GLConf
     /**
      * Return the compiled configuration.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getAll(): array
     {
@@ -136,9 +139,9 @@ final class GLConf
      * -  Convert key names cases (maybe).
      * -  Convert spaces and periods to underscores.
      *
-     * @param array $arr
+     * @param array<mixed> $arr
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function conformArray(array $arr): array
     {
@@ -197,10 +200,12 @@ final class GLConf
         // Force the type to string, in possible case of null.
         return (string) preg_replace_callback(
             '/\$\[([a-zA-Z0-9_.-]*?)]/',
-            static function ($matches) {
+            static function (array $matches): string {
                 // Replace with local variable (non-SAPI)
                 // Or keep intact if one isn't found.
-                return !empty(getenv($matches[1], true)) ? getenv($matches[1], true) : $matches[0];
+                $env = getenv($matches[1], true);
+
+                return is_string($env) && !empty($env) ? $env : $matches[0];
             },
             $data
         );

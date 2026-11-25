@@ -26,7 +26,7 @@ final class JSONConfDriver implements ConfDriverInterface
      *
      * @param string | null $file If null, then load the main configuration file
      *
-     * @return array
+     * @return array<mixed>
      * @throws JsonException
      */
     public function parseConfigurationFile(?string $file = null): array
