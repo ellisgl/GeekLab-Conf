@@ -1,7 +1,8 @@
-[![License: BSD](https://img.shields.io/badge/License-BSD-yellow.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![phpstan enabled](https://img.shields.io/badge/phpstan-enabled-green.svg)](https://github.com/phpstan/phpstan)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/quality-score.png?b=release)](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/?branch=release)
-[![Code Coverage](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/badges/coverage.png?b=release)](https://scrutinizer-ci.com/g/ellisgl/GeekLab-Conf/?branch=release)
+[![CI](https://github.com/ellisgl/GeekLab-Conf/actions/workflows/ci.yml/badge.svg)](https://github.com/ellisgl/GeekLab-Conf/actions/workflows/ci.yml)
+[![Packagist Version](https://img.shields.io/packagist/v/geeklab/conf)](https://packagist.org/packages/geeklab/conf)
+[![PHP Version](https://img.shields.io/packagist/dependency-v/geeklab/conf/php)](https://packagist.org/packages/geeklab/conf)
+[![PHPStan](https://img.shields.io/badge/PHPStan-level%208-brightgreen)](https://phpstan.org/)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 # geeklab/conf
 Immutable configuration system loader & parser for PHP >= 8.1 that supports multiple file formats and has some templating features.

@@ -24,7 +24,7 @@ final class INIConfDriver implements ConfDriverInterface
      *
      * @param string | null $file If null, then load the main configuration file
      *
-     * @return array
+     * @return array<mixed>
      */
     public function parseConfigurationFile(?string $file = null): array
     {
