@@ -11,7 +11,7 @@ This library is an alternative to '.env' type configuration libraries and uses t
 ### [Benchmarks](https://github.com/ellisgl/php-benchmarks/blob/master/results/Confs.md)
 
 ## Latest
-4.0.1 (2026-11-25): GitHub Actions CI, PHPStan level 8, and the composer.json license corrected to BSD-3-Clause.
+4.1.0 (2026-11-25): Requires PHP 8.3 or newer. symfony/yaml 7.4 or 8.x.
 
 ## Features:
 * Multi-file configuration loading, no more monolithic configurations!
